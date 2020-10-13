@@ -1,0 +1,161 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-APIGateway-A066B0AC-2902-4C01-B027-4FC08FF2EFEB</UserSecretsId>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DomainObjects\Application\**" />
+    <Compile Remove="DomainObjects\Approval\**" />
+    <Compile Remove="DomainObjects\Audit\**" />
+    <Compile Remove="DomainObjects\Customer\**" />
+    <Compile Remove="DomainObjects\Deposit\**" />
+    <Compile Remove="DomainObjects\Financial\**" />
+    <Compile Remove="DomainObjects\Ifrs\**" />
+    <Compile Remove="DomainObjects\Inf\**" />
+    <Compile Remove="DomainObjects\Mail\**" />
+    <Compile Remove="DomainObjects\Purchase\**" />
+    <Compile Remove="DomainObjects\Supplier\**" />
+    <Content Remove="DomainObjects\Application\**" />
+    <Content Remove="DomainObjects\Approval\**" />
+    <Content Remove="DomainObjects\Audit\**" />
+    <Content Remove="DomainObjects\Customer\**" />
+    <Content Remove="DomainObjects\Deposit\**" />
+    <Content Remove="DomainObjects\Financial\**" />
+    <Content Remove="DomainObjects\Ifrs\**" />
+    <Content Remove="DomainObjects\Inf\**" />
+    <Content Remove="DomainObjects\Mail\**" />
+    <Content Remove="DomainObjects\Purchase\**" />
+    <Content Remove="DomainObjects\Supplier\**" />
+    <EmbeddedResource Remove="DomainObjects\Application\**" />
+    <EmbeddedResource Remove="DomainObjects\Approval\**" />
+    <EmbeddedResource Remove="DomainObjects\Audit\**" />
+    <EmbeddedResource Remove="DomainObjects\Customer\**" />
+    <EmbeddedResource Remove="DomainObjects\Deposit\**" />
+    <EmbeddedResource Remove="DomainObjects\Financial\**" />
+    <EmbeddedResource Remove="DomainObjects\Ifrs\**" />
+    <EmbeddedResource Remove="DomainObjects\Inf\**" />
+    <EmbeddedResource Remove="DomainObjects\Mail\**" />
+    <EmbeddedResource Remove="DomainObjects\Purchase\**" />
+    <EmbeddedResource Remove="DomainObjects\Supplier\**" />
+    <None Remove="DomainObjects\Application\**" />
+    <None Remove="DomainObjects\Approval\**" />
+    <None Remove="DomainObjects\Audit\**" />
+    <None Remove="DomainObjects\Customer\**" />
+    <None Remove="DomainObjects\Deposit\**" />
+    <None Remove="DomainObjects\Financial\**" />
+    <None Remove="DomainObjects\Ifrs\**" />
+    <None Remove="DomainObjects\Inf\**" />
+    <None Remove="DomainObjects\Mail\**" />
+    <None Remove="DomainObjects\Purchase\**" />
+    <None Remove="DomainObjects\Supplier\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200519145044_ModifiedActRoleObj.cs" />
+    <Compile Remove="Data\Migrations\20200519145044_ModifiedActRoleObj.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200519151044_NewMigration.cs" />
+    <Compile Remove="Data\Migrations\20200519151044_NewMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200522121255_ch.cs" />
+    <Compile Remove="Data\Migrations\20200522121255_ch.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200610113322_ModifiedDeatailTable1.cs" />
+    <Compile Remove="Data\Migrations\20200610113322_ModifiedDeatailTable1.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200719151638_we.cs" />
+    <Compile Remove="Data\Migrations\20200719151638_we.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200720031245_email.cs" />
+    <Compile Remove="Data\Migrations\20200720031245_email.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200720171742_emailModified.cs" />
+    <Compile Remove="Data\Migrations\20200720171742_emailModified.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200720182447_emailModified.cs" />
+    <Compile Remove="Data\Migrations\20200720182447_emailModified.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200721091921_companyS.cs" />
+    <Compile Remove="Data\Migrations\20200721091921_companyS.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200808103619_inttolong.cs" />
+    <Compile Remove="Data\Migrations\20200808103619_inttolong.Designer.cs" />
+    <Compile Remove="Handlers\Common\AddUpdateCreditBureauCommandHandler.cs" />
+    <Compile Remove="Handlers\Common\GetAllCallMemoTypeQueryHandler.cs" />
+    <Compile Remove="Handlers\Common\GetAllCreditBureauQueryHandler.cs" />
+    <Compile Remove="Handlers\Common\GetAllDirectorTypeQueryHandler.cs" />
+    <Compile Remove="Handlers\Common\GetAllGLAccountQueryHandler.cs" />
+    <Compile Remove="Handlers\Common\GetAllProductTypeQueryHandler.cs" />
+    <Compile Remove="Handlers\Workflow\GetCreditBureauQueryHandler.cs" />
+    <Compile Remove="Handlers\Workflow\GetDocumenttypeQueryHandler.cs" />
+    <Compile Remove="Migrations\20200920071737_INITIAL_MIGRATION.cs" />
+    <Compile Remove="Migrations\20200920071737_INITIAL_MIGRATION.Designer.cs" />
+    <Compile Remove="Migrations\20200921090938_update-seed-ption.cs" />
+    <Compile Remove="Migrations\20200921090938_update-seed-ption.Designer.cs" />
+    <Compile Remove="Migrations\20200921091619_update-seed-ption.cs" />
+    <Compile Remove="Migrations\20200921091619_update-seed-ption.Designer.cs" />
+    <Compile Remove="Migrations\20200924213529_others.cs" />
+    <Compile Remove="Migrations\20200924213529_others.Designer.cs" />
+    <Compile Remove="Migrations\20200925110952_str.cs" />
+    <Compile Remove="Migrations\20200925110952_str.Designer.cs" />
+    <Compile Remove="Migrations\20201002150700_INITIAL_MIGRATION.cs" />
+    <Compile Remove="Migrations\20201002150700_INITIAL_MIGRATION.Designer.cs" />
+    <Compile Remove="Migrations\20201009152117_dates.cs" />
+    <Compile Remove="Migrations\20201009152117_dates.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\Templates\EmailTemplate\companytemplate - Copy %282%29.html" />
+    <Content Remove="wwwroot\Templates\EmailTemplate\companytemplate - Copy %283%29.html" />
+    <Content Remove="wwwroot\Templates\EmailTemplate\companytemplate - Copy %284%29.html" />
+    <Content Remove="wwwroot\Templates\EmailTemplate\companytemplate - Copy.html" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="EasyCaching.InMemory" Version="0.8.11" />
+    <PackageReference Include="EasyCaching.Redis" Version="0.8.11" />
+    <PackageReference Include="EPPlus" Version="5.3.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.49.0" />
+    <PackageReference Include="Google.Apis.Plus.v1" Version="1.49.0.1627" />
+    <PackageReference Include="MailKit" Version="2.6.0" />
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.7" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.5.1" />
+    <PackageReference Include="NLog.Config" Version="4.7.4" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.3" />
+    <PackageReference Include="Polly" Version="7.2.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.4.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.4.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.4.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.1" />
+    <PackageReference Include="Wangkanai.Detection" Version="3.0.0-alpha10" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\APIGateway.Contracts\APIGateway.Contracts.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="wwwroot\Files\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Reference Include="GOSLibraries">
+      <HintPath>Lib\GOSLibraries.dll</HintPath>
+    </Reference>
+    <Reference Include="Support.SDK">
+      <HintPath>..\..\Treasury\App\Lib\Support.SDK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

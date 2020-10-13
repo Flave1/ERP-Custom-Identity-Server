@@ -1,0 +1,18 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/v1/branch",
+      "DownstreamScheme": "https",
+      "DownStreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44362"
+        }
+      ],
+      "UpstreamPathTemplate": "/branch",
+      "UpstreamHttpMethod": [ "GET" ]
+
+    }
+
+  ]
+}

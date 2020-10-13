@@ -1,0 +1,70 @@
+2020-09-17T09:20:58.4852326+01:00  [INF] Starting Detection version "3.0.0.0" (9fee71dd)
+2020-09-17T09:21:04.5904202+01:00  [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data, this mode should only be enabled during development. (2b730620)
+2020-09-17T09:21:04.8515917+01:00  [WRN] No type was specified for the decimal column '"StaffLimit"' on entity type '"cor_staff"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2020-09-17T09:21:04.9700368+01:00  [WRN] No type was specified for the decimal column '"LimitAmount"' on entity type '"cor_workflowlevel"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2020-09-17T09:21:13.5242498+01:00  [WRN] User "61d16e57-ea11-4843-98da-187e2d72df0b" validation failed: "DuplicateUserName". (5dc28e15)
+2020-09-17T09:21:21.8847814+01:00 8000000b-0000-fa00-b63f-84710c7967bb [ERR] Session cache read exception, Key:"62f0b1ba-a0cc-b640-895c-64f1e7e2aaf5" (cfc081e9)
+StackExchange.Redis.RedisConnectionException: It was not possible to connect to the redis server(s). UnableToConnect on localhost:6379/Interactive, Initializing/NotStarted, last: NONE, origin: BeginConnectAsync, outstanding: 0, last-read: 2s ago, last-write: 2s ago, keep-alive: 60s, state: Connecting, mgr: 10 of 10 available, last-heartbeat: never, global: 7s ago, v: 2.1.58.34321
+   at StackExchange.Redis.ConnectionMultiplexer.ConnectImpl(ConfigurationOptions configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 1169
+   at StackExchange.Redis.ConnectionMultiplexer.Connect(ConfigurationOptions configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 1037
+   at StackExchange.Redis.ConnectionMultiplexer.Connect(String configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 1020
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.Connect()
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.GetAndRefresh(String key, Boolean getData)
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.Get(String key)
+   at Microsoft.AspNetCore.Session.DistributedSession.Load()
+2020-09-17T09:21:32.9345605+01:00 8000000b-0000-fa00-b63f-84710c7967bb [ERR] Error closing the session. (0daab2ad)
+StackExchange.Redis.RedisConnectionException: It was not possible to connect to the redis server(s). UnableToConnect on localhost:6379/Interactive, Initializing/NotStarted, last: NONE, origin: BeginConnectAsync, outstanding: 0, last-read: 2s ago, last-write: 2s ago, keep-alive: 60s, state: Connecting, mgr: 10 of 10 available, last-heartbeat: never, global: 18s ago, v: 2.1.58.34321
+   at StackExchange.Redis.ConnectionMultiplexer.ConnectImplAsync(ConfigurationOptions configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 863
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.ConnectAsync(CancellationToken token)
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.GetAndRefreshAsync(String key, Boolean getData, CancellationToken token)
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.RefreshAsync(String key, CancellationToken token)
+   at Microsoft.AspNetCore.Session.DistributedSession.CommitAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+2020-09-17T09:21:42.8919221+01:00 80000017-0003-f900-b63f-84710c7967bb [ERR] Session cache read exception, Key:"587cd3b0-cb8e-af6f-79dd-762c5733b141" (cfc081e9)
+StackExchange.Redis.RedisConnectionException: It was not possible to connect to the redis server(s). UnableToConnect on localhost:6379/Interactive, Initializing/NotStarted, last: NONE, origin: BeginConnectAsync, outstanding: 0, last-read: 2s ago, last-write: 2s ago, keep-alive: 60s, state: Connecting, mgr: 10 of 10 available, last-heartbeat: never, global: 28s ago, v: 2.1.58.34321
+   at StackExchange.Redis.ConnectionMultiplexer.ConnectImpl(ConfigurationOptions configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 1169
+   at StackExchange.Redis.ConnectionMultiplexer.Connect(ConfigurationOptions configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 1037
+   at StackExchange.Redis.ConnectionMultiplexer.Connect(String configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 1020
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.Connect()
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.GetAndRefresh(String key, Boolean getData)
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.Get(String key)
+   at Microsoft.AspNetCore.Session.DistributedSession.Load()
+2020-09-17T09:21:53.3033198+01:00 80000017-0003-f900-b63f-84710c7967bb [ERR] Error closing the session. (0daab2ad)
+StackExchange.Redis.RedisConnectionException: It was not possible to connect to the redis server(s). UnableToConnect on localhost:6379/Interactive, Initializing/NotStarted, last: NONE, origin: BeginConnectAsync, outstanding: 0, last-read: 2s ago, last-write: 2s ago, keep-alive: 60s, state: Connecting, mgr: 10 of 10 available, last-heartbeat: never, global: 38s ago, v: 2.1.58.34321
+   at StackExchange.Redis.ConnectionMultiplexer.ConnectImplAsync(ConfigurationOptions configuration, TextWriter log) in /_/src/StackExchange.Redis/ConnectionMultiplexer.cs:line 863
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.ConnectAsync(CancellationToken token)
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.GetAndRefreshAsync(String key, Boolean getData, CancellationToken token)
+   at Microsoft.Extensions.Caching.StackExchangeRedis.RedisCache.RefreshAsync(String key, CancellationToken token)
+   at Microsoft.AspNetCore.Session.DistributedSession.CommitAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+2020-09-17T09:22:32.9205340+01:00 80000027-0001-fb00-b63f-84710c7967bb [INF] MailKit.Security.SslHandshakeException: An error occurred while attempting to establish an SSL or TLS connection.
+
+This usually means that the SSL certificate presented by the server is not trusted by the system for one or more of
+the following reasons:
+
+1. The server is using a self-signed certificate which cannot be verified.
+2. The local system is missing a Root or Intermediate certificate needed to verify the server's certificate.
+3. A Certificate Authority CRL server for one or more of the certificates in the chain is temporarily unavailable.
+4. The certificate presented by the server is expired or invalid.
+
+Another possibility is that you are trying to connect to a port which does not support SSL/TLS.
+
+It is also possible that the set of SSL/TLS protocols supported by the client and server do not match.
+
+See https://github.com/jstedfast/MailKit/blob/master/FAQ.md#SslHandshakeException for possible solutions.
+
+ ---> System.IO.IOException: The handshake failed due to an unexpected packet format.
+   at System.Net.Security.SslStream.StartReadFrame(Byte[] buffer, Int32 readBytes, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslStream.StartReceiveBlob(Byte[] buffer, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslStream.CheckCompletionBeforeNextReceive(ProtocolToken message, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslStream.StartSendBlob(Byte[] incoming, Int32 count, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslStream.ForceAuthentication(Boolean receiveFirst, Byte[] buffer, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslStream.ProcessAuthentication(LazyAsyncResult lazyResult, CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.AuthenticateAsClient(SslClientAuthenticationOptions sslClientAuthenticationOptions)
+   at System.Net.Security.SslStream.AuthenticateAsClient(String targetHost, X509CertificateCollection clientCertificates, SslProtocols enabledSslProtocols, Boolean checkCertificateRevocation)
+   at MailKit.Net.Smtp.SmtpClient.ConnectAsync(String host, Int32 port, SecureSocketOptions options, Boolean doAsync, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at MailKit.Net.Smtp.SmtpClient.ConnectAsync(String host, Int32 port, SecureSocketOptions options, Boolean doAsync, CancellationToken cancellationToken)
+   at MailKit.Net.Smtp.SmtpClient.Connect(String host, Int32 port, SecureSocketOptions options, CancellationToken cancellationToken)
+   at MailKit.MailService.Connect(String host, Int32 port, Boolean useSsl, CancellationToken cancellationToken)
+   at APIGateway.MailHandler.Service.EmailService.Send(EmailMessage emailMessage) in C:\Users\GODP\source\repos\GOS APPS\Godp-Solutions\APIGateway\MailHandler\Service\EmailService .cs:line 147 (308e055f)
