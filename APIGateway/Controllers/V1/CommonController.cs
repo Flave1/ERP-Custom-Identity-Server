@@ -376,16 +376,13 @@ namespace APIGateway.Controllers.V1
                 return BadRequest(res);
             return Ok(res);
         }
-
-
-        [ERPActivity(Action = UserActions.View, Activity = 20)]
+         
         [HttpGet(ApiRoutes.CommonEnpoint.GET_COUNTRY)]
         public async Task<IActionResult> GET_COUNTRY([FromQuery] GetCountryQuery query)
         { 
             return Ok(await _mediator.Send(query));
         }
-
-        [ERPActivity(Action = UserActions.View, Activity = 21)]
+         
         [HttpGet(ApiRoutes.CommonEnpoint.GET_STATE)]
         public async Task<IActionResult> GET_STATE([FromQuery] GetStateQuery query)
         {
@@ -397,49 +394,43 @@ namespace APIGateway.Controllers.V1
         {
             return Ok(await _mediator.Send(query));
         }
-
-        [ERPActivity(Action = UserActions.View, Activity = 26)]
+         
         [HttpGet(ApiRoutes.CommonEnpoint.GET_DOCUMENT_TYPE)]
         public async Task<IActionResult> GET_DOCUMENT_TYPE([FromQuery] GetDocumentTypeQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-
-        [ERPActivity(Action = UserActions.View, Activity = 25)]
+         
         [HttpGet(ApiRoutes.CommonEnpoint.GET_CURRENCY_RATE)]
         public async Task<IActionResult> GET_CURRENCY_RATE([FromQuery] GetCurrencyRateQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-
-        [ERPActivity(Action = UserActions.View, Activity = 27)]
+         
         [HttpGet(ApiRoutes.CommonEnpoint.GET_IDENTIFICATION)]
         public async Task<IActionResult> GET_IDENTIFICATION([FromQuery] GetIdentificationQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-
-        [ERPActivity(Action = UserActions.View, Activity = 23)]
+         
         [HttpGet(ApiRoutes.CommonEnpoint.GET_CURRENCY)]
         public async Task<IActionResult> GET_CURRENCY([FromQuery] GetCurrencyQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-
-        [ERPActivity(Action = UserActions.View, Activity = 28)]
+         
         [HttpGet(ApiRoutes.CommonEnpoint.GET_CREDITBUREAU)]
         public async Task<IActionResult> GET_CREDITBUREAU([FromQuery] GetCreditBureauQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [ERPActivity(Action = UserActions.View, Activity = 22)]
+
         [HttpGet(ApiRoutes.CommonEnpoint.GET_CITY)]
         public async Task<IActionResult> GET_CITY([FromQuery] GetCityQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-
-        [ERPActivity(Action = UserActions.View, Activity = 24)]
+         
         [HttpGet(ApiRoutes.CommonEnpoint.GET_JOB_TITLE)]
         public async Task<IActionResult> GET_JOB_TITLE([FromQuery] GetJobTitleQuery query)
         {

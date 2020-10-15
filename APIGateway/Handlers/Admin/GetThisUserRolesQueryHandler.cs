@@ -35,7 +35,7 @@ namespace APIGateway.Handlers.Admin
 		}
 		public async Task<UserRoleRespObj> Handle(GetUserRolesQuery request, CancellationToken cancellationToken)
 		{
-			var response = new UserRoleRespObj { UserRoles = new List<UserRoleObj>(), Status = new APIResponseStatus { Message = new APIResponseMessage() } };
+			var response = new UserRoleRespObj {  UserRoles = new List<UserRoleObj>(), UserRoleActivities = new List<ActivityObj>(), Status = new APIResponseStatus { IsSuccessful = true, Message = new APIResponseMessage() } };
 			try
 			{
 				var userid = _accessor.HttpContext.User?.FindFirst(r => r.Type == "userId")?.Value ?? string.Empty;

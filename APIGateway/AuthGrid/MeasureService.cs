@@ -480,7 +480,6 @@ namespace APIGateway.AuthGrid
                                 await _security.SaveChangesAsync();
                                 return response;
                             }
-
                         }
                         loginFailed.RetryTime = DateTime.UtcNow.Add(setup.RetryTimeInMinutes);
                         loginFailed.Userid = usergent;

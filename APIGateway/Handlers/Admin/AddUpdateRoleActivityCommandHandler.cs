@@ -39,6 +39,7 @@ namespace GODP.APIsContinuation.Handlers.Admin
         }
         public async Task<RoleActivityRegRespObj> Handle(AddUpdateUserRoleActivityCommand request, CancellationToken cancellationToken)
         {
+            var response = new RoleActivityRegRespObj { Status = new APIResponseStatus { Message = new APIResponseMessage() } };
             try
             {
                 var loggedInUserId = _httpContextAccessor.HttpContext.User?.FindFirst(x => x.Type == "userId").Value;
@@ -50,11 +51,20 @@ namespace GODP.APIsContinuation.Handlers.Admin
                 {
                     try
                     {
+                         
                         if (request.Activities.Count > 0)
                         {
                             foreach (var item in request.Activities)
                             {
-                                 newActivity = new cor_userroleactivity()
+
+                                if (item.ActivityId > 0 && !item.CanAdd && !item.CanDelete && !item.CanEdit && !item.CanApprove && !item.CanDelete && !item.CanView)
+                                {
+                                    response.Status.IsSuccessful = false;
+                                    response.Status.Message.FriendlyMessage = $"Please activiate at least one action for selected page '{_context.cor_activity.FirstOrDefault(r => r.ActivityId == item.ActivityId)?.ActivityName}'";
+                                    return response;
+                                        ;
+                                }
+                                newActivity = new cor_userroleactivity()
                                 {
                                     ActivityId = item.ActivityId,
                                     CanAdd = item.CanAdd,

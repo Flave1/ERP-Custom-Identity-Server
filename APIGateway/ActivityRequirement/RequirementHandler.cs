@@ -83,12 +83,12 @@ namespace APIGateway.ActivityRequirement
                         }
                     }   
                     IMeasureService _measureService = scopedServices.GetRequiredService<IMeasureService>();
-                    if(_measureService.CheckForSessionTrailAsync(userId, (int)Modules.CENTRAL).Result.StatusCode == 401)
-                    {
-                        context.HttpContext.Response.StatusCode = 401;
-                        context.Result = new UnauthorizedObjectResult(response);
-                        return;
-                    }
+                    //if(_measureService.CheckForSessionTrailAsync(userId, (int)Modules.CENTRAL).Result.StatusCode == 401)
+                    //{
+                    //    context.HttpContext.Response.StatusCode = 401;
+                    //    context.Result = new UnauthorizedObjectResult(response);
+                    //    return;
+                    //}
                     await next();
                     return;
                 }
