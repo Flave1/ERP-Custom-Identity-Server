@@ -29,6 +29,7 @@ namespace APIGateway.AuthGrid
         public bool SecuritySettingsActiveOnWebApp { get; set; }
         public bool EnableLoadBalance { get; set; }
         public int LoadBalanceInHours { get; set; }
+        public DateTime WhenNextToUpdatePassword { get; set; }
     }
     
 }

@@ -1,6 +1,7 @@
 ﻿using APIGateway.ActivityRequirement;
 using APIGateway.Contracts.Commands.Admin;
-using APIGateway.Contracts.Queries.Admin; 
+using APIGateway.Contracts.Queries.Admin;
+using APIGateway.Handlers.Admin;
 using GODPAPIs.Contracts.Commands.Admin; 
 using GODPAPIs.Contracts.V1; 
 using GOSLibraries.Enums;
@@ -202,5 +203,17 @@ namespace GODP.APIsContinuation.Controllers.V1
             var query = new GetUserRolesQuery();
             return Ok(await _mediator.Send(query));
         }
+
+
+        [ERPActivity(Action = UserActions.Add, Activity = 3)]
+        [HttpPost(ApiRoutes.AdminEndpoints.RESET_PROFILE)]
+        public async Task<IActionResult> RESET_PROFILE([FromBody] ResetStaffProfileCommand command)
+        {
+            var response = await _mediator.Send(command);
+            if (response.Status.IsSuccessful)
+                return Ok(response);
+            return BadRequest(response);
+        }
+        
     }
 }

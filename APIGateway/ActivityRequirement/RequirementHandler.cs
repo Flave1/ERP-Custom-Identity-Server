@@ -199,7 +199,7 @@ namespace APIGateway.ActivityRequirement
                     var scopedServices = scope.ServiceProvider;
                     var _dataContext = scopedServices.GetRequiredService<DataContext>();
 
-                    thisUserRoleIds = _dataContext.UserRoles.Where(x => x.UserId == userId).ToList().Select(x => x.RoleId);
+                    thisUserRoleIds = _dataContext?.UserRoles?.Where(x => x.UserId == userId).ToList().Select(x => x.RoleId);
 
                     thisUserRoleNames = (from role in _dataContext.Roles
                                          join userRole in _dataContext.UserRoles
@@ -209,7 +209,8 @@ namespace APIGateway.ActivityRequirement
 
                     roleActivities = (from activity in _dataContext.cor_activity
                                       join userActivityRole in _dataContext.cor_userroleactivity on activity.ActivityId equals userActivityRole.ActivityId
-                                      select activity.ActivityName).ToList();
+                                      join roles in _dataContext.Roles on userActivityRole.RoleId equals roles.Id
+                                      select roles.Name).ToList();
 
                     bool hasMatch = roleActivities.Select(x => x).Intersect(thisUserRoleNames).Any();
 
@@ -232,14 +233,13 @@ namespace APIGateway.ActivityRequirement
                     {
                         if (!thisUserRoleCan)
                         {
-                            response.Status.Message.FriendlyMessage = "You don't have privilege to perform this action";
+                            response.Status.Message.FriendlyMessage = GenericMiddlwareMessages.NO_PRIVILEGE;
                             var contentResponse = new ContentResult
                             {
                                 Content = JsonConvert.SerializeObject(response),
                                 ContentType = "application/json",
-                                StatusCode = 403 
+                                StatusCode = 403
                             };
-                            
                             context.HttpContext.Response.StatusCode = 403;
                             context.Result = contentResponse;
                             return;

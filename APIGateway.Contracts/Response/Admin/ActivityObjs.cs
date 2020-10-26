@@ -65,6 +65,7 @@ namespace APIGateway.Contracts.Response.Admin
     public class QuestionsRespObj   
     {
         public List<QuestionsObj> Questions { get; set; }
+        public int UserCount { get; set; }
         public APIResponseStatus Status { get; set; }
     }
     public class QuestionsObj

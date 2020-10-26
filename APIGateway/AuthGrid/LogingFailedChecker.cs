@@ -14,6 +14,7 @@ namespace APIGateway.AuthGrid
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Userid { get; set; }
         public int Counter { get; set; }
+        public int QuestionTimeCount { get; set; }
         public DateTime RetryTime { get; set; }
         
     }

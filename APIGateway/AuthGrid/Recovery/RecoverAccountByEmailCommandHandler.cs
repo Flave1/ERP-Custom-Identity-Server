@@ -1,5 +1,6 @@
 ﻿using APIGateway.Contracts.Commands.Email;
 using APIGateway.Contracts.Response.Recovery;
+using APIGateway.Extensions;
 using APIGateway.MailHandler;
 using APIGateway.MailHandler.Service;
 using GODP.APIsContinuation.DomainObjects.UserAccount;
@@ -63,6 +64,7 @@ namespace APIGateway.AuthGrid.Recovery
                 await _email.Send(em);
             }
 
+           
             private readonly IBaseURIs _uRIs;
             private readonly IEmailService _email;
             private readonly IWebHostEnvironment _env;
@@ -82,7 +84,8 @@ namespace APIGateway.AuthGrid.Recovery
                     var user = await _userManager.FindByEmailAsync(request.Email);
 
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    await RecoveryMail(request.Email, token);
+                    string ecodedToken = CustomEncoder.Base64Encode(token);
+                    await RecoveryMail(request.Email, ecodedToken);
                     response.Status.IsSuccessful = true;
                     response.Status.Message.FriendlyMessage = "Link to reset password has been sent to your email";
                     return response;

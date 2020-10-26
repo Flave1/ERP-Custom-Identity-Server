@@ -209,93 +209,11 @@ namespace GODP.APIsContinuation.Controllers.V1
             return BadRequest(res);
         }
 
-        //[HttpPost(ApiRoutes.ComapnyEndPoints.GENERATE_EXCEL_FOR_COMP_STRU_DEF)]
-        //public async Task<ActionResult<byte[]>> GenerateExcel()
-        //{
-        //    try
-        //    {
-        //        return Ok(await _compRepo.GenerateExportCompanyStructureDefinitionAsync());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        #region Log error to file 
-        //        var errorCode = ErrorID.Generate(4);
-        //        _logger.Error($"ErrorID : GenerateExcel{errorCode} Ex : {ex?.Message ?? ex?.InnerException?.Message} ErrorStack : {ex?.StackTrace}");
-        //        return BadRequest(new CompanyStructureDefinitionRegRespObj
-        //        {
-
-        //            Status = new APIResponseStatus
-        //            {
-        //                IsSuccessful = false,
-        //                Message = new APIResponseMessage
-        //                {
-        //                    FriendlyMessage = "Error occured!! Unable to process request",
-        //                    MessageId = errorCode,
-        //                    TechnicalMessage = $"ErrorID : GenerateExcel{errorCode} Ex : {ex?.Message ?? ex?.InnerException?.Message} ErrorStack : {ex?.StackTrace}"
-        //                }
-        //            }
-        //        });
-        //        #endregion
-        //    }
-        //}
-
-        //[HttpPost(ApiRoutes.ComapnyEndPoints.UPLOAD_COMPANY_STRUCTURE_DEF)]
-        //public async Task<IActionResult> UploadCompanyStructureDefinition()
-        //{
-        //    try
-        //    {
-        //        var httpRequest = HttpContext.Request;
-
-        //        if (httpRequest == null)
-        //        {
-        //            return BadRequest();
-        //        }
-        //        var postedFile = httpRequest.Form.Files["Image"];
-        //        var fileName = httpRequest.Form.Files["Image"].FileName;
-        //        var fileExtention = Path.GetExtension(fileName);
-        //        var image = new byte[postedFile.Length];
-        //        var currentUserId = _httpContextAccessor.HttpContext.User?.FindFirst(x => x.Type == "userId").Value;
-        //        var user = await _userManger.FindByIdAsync(currentUserId);
-        //        var response = await _compRepo.UploadCompanyStructureDefinitionAsync(image, user.UserName);
-
-        //        if (!response)
-        //        {
-        //            return Ok( new CompanyRespObj {
-        //                Status = new APIResponseStatus
-        //                {
-        //                    IsSuccessful = true,
-        //                    Message = new APIResponseMessage
-        //                    {
-        //                        FriendlyMessage = "Record uploaded successfully"
-        //                    }
-        //                }
-        //            });
-        //        }
-        //        return BadRequest(new CompanyRespObj
-        //        {
-        //            Status = new APIResponseStatus
-        //            {
-        //                IsSuccessful = true,
-        //                Message = new APIResponseMessage
-        //                {
-        //                    FriendlyMessage = "Failure uploading record"
-        //                }
-        //            }
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
-         
         #endregion
-        
+
         #region Company structure
 
-
-
+         
         [HttpGet(ApiRoutes.ComapnyEndPoints.GET_ALL_COMPANY_STRUCTURE_BY_ACCESSID)]
         public async Task<ActionResult<CompanyStructureDefinitionRegRespObj>> GetCompanyByAccesId([FromQuery] CompanyStructureDefinitionSearchObj request)
         {
@@ -339,8 +257,9 @@ namespace GODP.APIsContinuation.Controllers.V1
                 };
                 #endregion
             }
-        } 
-      
+        }
+
+        [ERPActivity(Action = UserActions.Add, Activity = 11)]
         [HttpPost(ApiRoutes.ComapnyEndPoints.ADD_UPDATE_COMPANY_STRUCTURE)]
         public async Task<IActionResult> ADD_UPDATE_COMPANY_STRUCTURE([FromForm] AddUpdateCompanyStructureCommand command)
         {
@@ -350,6 +269,7 @@ namespace GODP.APIsContinuation.Controllers.V1
             return BadRequest(res);
         }
 
+        [ERPActivity(Action = UserActions.Delete, Activity = 11)]
         [HttpPost(ApiRoutes.ComapnyEndPoints.DELETE_COMPANY_STRUCTURE)]
         public async Task<IActionResult> DeleteCompanyStructDefinition([FromBody] DeleteCompanyStructureCommand command)
         {
@@ -367,7 +287,7 @@ namespace GODP.APIsContinuation.Controllers.V1
             return Ok(res); 
         }
 
-
+        [ERPActivity(Action = UserActions.Add, Activity = 11)]
         [HttpPost(ApiRoutes.ComapnyEndPoints.UPDATE_COMPANY_STRUCTURE)]
         public async Task<IActionResult> UPDATE_COMPANY_STRUCTURE([FromBody] UpdateCompanyStructureCommand command)
         { 
@@ -377,15 +297,8 @@ namespace GODP.APIsContinuation.Controllers.V1
             return BadRequest(response);
         }
 
-        //[HttpPost(ApiRoutes.ComapnyEndPoints.ADD_UPDATE_ADD_COMPANY_STRUCTURE_INFO)]
-        //public async Task<IActionResult> AddUpCompStrucInfor([FromBody] AddUpdateCompanyStructureInfoCommand command)
-        //{
-        //    var res = await _mediator.Send(command);
-        //    if (res.Status.IsSuccessful)
-        //        return Ok(res);
-        //    return BadRequest(res);
-        //}
 
+        [ERPActivity(Action = UserActions.View, Activity = 11)]
         [HttpGet(ApiRoutes.ComapnyEndPoints.GET_COMPANY_STRUCTURE)]
         public async Task<IActionResult> GET_COMPANY_STRUCTURE_BY_DEF(GetCompanyStructureQuery query)
         {
@@ -458,9 +371,7 @@ namespace GODP.APIsContinuation.Controllers.V1
             var query = new DownloadCompanyStructureQuery();
             return Ok(await _mediator.Send(query));
         }
-
-        //UploadCompanyStructureDefinitionCommand
-        //DownloadCompanyDefinitionQuery
+         
         [ERPActivity(Action = UserActions.Add, Activity = 10)]
         [HttpPost(ApiRoutes.ComapnyEndPoints.UPLOAD_COMPANY_STRUCTURE_DEF)]
         public async Task<IActionResult> UPLOAD_COMPANY_STRUCTURE_DEF()

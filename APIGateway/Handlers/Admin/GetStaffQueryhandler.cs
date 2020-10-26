@@ -34,23 +34,23 @@ namespace APIGateway.Handlers.Admin
             _dataContext = dataContext;
         }
 
-        private IList<string> GetAllRoleIds(string userId)
+        private List<string> GetAllRoleIds(string userId)
         {
             //var user =  _userManager.FindByIdAsync(userId);
-            return _dataContext.UserRoles.Where(s => s.UserId == userId).Select(c => c.RoleId).ToList();
+            return _dataContext?.UserRoles?.Where(s => s.UserId == userId)?.Select(c => c.RoleId)?.ToList();
         }
-        private  IEnumerable<int> GetAccessLevels(int staffId)
+        private List<int> GetAccessLevels(int staffId)
         {
             var userAccessList =  _dataContext.cor_useraccess.Where(d => d.Deleted == false).ToList();
 
             var user = _userManager.Users.FirstOrDefault(d => d.StaffId == staffId);
             if(user != null)
             {
-              return userAccessList.Where(x => x.UserId == user.Id).Select(g => g.AccessLevelId).ToList().Distinct();
+              return userAccessList.Where(x => x.UserId == user.Id).Select(g => g.AccessLevelId).Distinct().ToList();
             }
             return new List<int>();
         }
-        private IList<string> GetAllRoleNames(IList<string> roleIds)
+        private List<string> GetAllRoleNames(IList<string> roleIds)
         {
             //var user =  _userManager.FindByIdAsync(userId);
             return _dataContext.Roles.Where(s => roleIds.Contains(s.Id)).Select(c => c.Name).ToList();
@@ -65,47 +65,51 @@ namespace APIGateway.Handlers.Admin
                 var companystructureList = _dataContext.cor_companystructure.Where(c => c.Deleted == false).ToList();
                 //  var statesList = await _dataContext.cor_state.Where(d => d.Deleted == false).ToListAsync();
                 //  var roleList = await _dataContext.UserRoles.ToListAsync();
-
-                var staff = await _dataContext.cor_staff.FirstOrDefaultAsync(c => c.StaffId == request.StaffId);
-                var userDetail = await _dataContext.Users.FirstOrDefaultAsync(f => f.StaffId == request.StaffId);
-
                 var respList = new List<StaffObj>();
-                if (staff != null)
+                var staff = await _dataContext.cor_staff.FirstOrDefaultAsync(c => c.StaffId == request.StaffId);
+                if(staff != null)
                 {
-                    var item = new StaffObj
+                    var userDetail = await _dataContext.Users.FirstOrDefaultAsync(f => f.StaffId == request.StaffId);
+                    if(userDetail != null)
                     {
-                        FirstName = staff.FirstName,
-                        AccessLevel = staff.AccessLevel,
-                        Email = staff.Email,
-                        Gender = staff.Gender,
-                        JobTitle = staff.JobTitle,
-                        LastName = staff.LastName,
-                        MiddleName = staff.MiddleName,
-                        PhoneNumber = staff.PhoneNumber,
-                        Photo = staff.Photo,
-                        Address = staff.Address,
-                        CountryId = staff.CountryId,
-                        StaffCode = staff.StaffCode,
-                        StaffId = staff.StaffId,
-                        StateId = staff.StateId,
-                        StaffLimit = staff.StaffLimit,
-                        AccessLevelId = (int)staff.AccessLevel,
-                        DateOfBirth = staff.DateOfBirth,
-                        StaffOfficeId = staff.StaffOfficeId,
-                        UserAccessLevels = GetAccessLevels(staff.StaffId),
-                        //CountryName = countryList.Count() > 0 ? countryList.FirstOrDefault(x => staff.CountryId == x.CountryId).CountryName : string.Empty,
-                        //JobTitleName = JobList.Count() > 0 || staff.JobTitle > 0 ? JobList.FirstOrDefault(x => staff.JobTitle == x.JobTitleId).Name : string.Empty,
-                        //StaffOfficeName = companystructureList.Count() > 0 || staff.StaffOfficeId > 0 ? companystructureList.FirstOrDefault(x => x.CompanyStructureId == staff.StaffOfficeId).Name : string.Empty,
-                        //StateName = statesList.Count() > 0 ? statesList.FirstOrDefault(x => x.StateId == staff.StateId).StateName : string.Empty,
-                        UserRoleIds = GetAllRoleIds(userDetail.Id),
-                        UserName = userDetail.UserName,
-                        UserId = userDetail.Id,
-                        UserStatus = userDetail.Active,
-                        UserRoleNames = GetAllRoleNames(GetAllRoleIds(userDetail.Id))
-
-                    };
-                    item.UserAccessLevels.Distinct();
-                    respList.Add(item);
+                       
+                        if (staff != null)
+                        {
+                            var item = new StaffObj();
+                            item.FirstName = staff.FirstName;
+                            item.AccessLevel = staff.AccessLevel;
+                            item.Email = staff.Email;
+                            item.Gender = staff.Gender;
+                            item.JobTitle = staff.JobTitle;
+                            item.LastName = staff.LastName;
+                            item.MiddleName = staff.MiddleName;
+                            item.PhoneNumber = staff.PhoneNumber;
+                            item.Photo = staff.Photo;
+                            item.Address = staff.Address;
+                            item.CountryId = staff.CountryId;
+                            item.StaffCode = staff.StaffCode;
+                            item.StaffId = staff.StaffId;
+                            item.StateId = staff.StateId;
+                            item.StaffLimit = staff.StaffLimit;
+                            item.AccessLevelId = (int)staff.AccessLevel;
+                            item.DateOfBirth = staff.DateOfBirth;
+                            item.StaffOfficeId = staff.StaffOfficeId;
+                            item.UserAccessLevels = GetAccessLevels(staff.StaffId);
+                            //CountryName = countryList.Count() > 0 ? countryList.FirstOrDefault(x => staff.CountryId == x.CountryId).CountryName : string.Empty,
+                            //JobTitleName = JobList.Count() > 0 || staff.JobTitle > 0 ? JobList.FirstOrDefault(x => staff.JobTitle == x.JobTitleId).Name : string.Empty,
+                            //StaffOfficeName = companystructureList.Count() > 0 || staff.StaffOfficeId > 0 ? companystructureList.FirstOrDefault(x => x.CompanyStructureId == staff.StaffOfficeId).Name : string.Empty,
+                            //StateName = statesList.Count() > 0 ? statesList.FirstOrDefault(x => x.StateId == staff.StateId).StateName : string.Empty,
+                            item.UserRoleIds = GetAllRoleIds(userDetail.Id);
+                            item.UserName = userDetail.UserName;
+                            item.UserId = userDetail.Id;
+                            item.UserStatus = userDetail.Active;
+                            item.UserRoleNames = GetAllRoleNames(GetAllRoleIds(userDetail.Id));
+                            item.UserAccessLevels.Distinct();
+                            respList.Add(item);
+                        }
+                    }
+                    
+                
                 }
                 
                 return new StaffRespObj

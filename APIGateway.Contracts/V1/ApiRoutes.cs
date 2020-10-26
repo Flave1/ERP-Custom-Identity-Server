@@ -71,6 +71,7 @@ namespace GODPAPIs.Contracts.V1
             public const string GET_QUESTION = Base + "/admin/get/single/questions";
             public const string ADD_UPDATE_QUESTION = Base + "/admin/add/update/questions";
             public const string DELETE_QUESTION = Base + "/admin/delete/questions";
+            public const string RESET_PROFILE = Base + "/admin/reset/profile";
         }
 
 

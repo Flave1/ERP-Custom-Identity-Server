@@ -33,10 +33,11 @@ namespace Puchase_and_payables.Handlers.Supplier.Settup
                 var response = new QuestionsRegRespObj { Status = new APIResponseStatus { IsSuccessful = false, Message = new APIResponseMessage() } };
 
                 try
-                {   
+                { 
                     if (request.QuestionsId > 0)
                     {
                         var selectedQuest = await _data.Questions.FindAsync(request.QuestionsId);
+                        
                         if (selectedQuest != null)
                         {
                             _data.Questions.Remove(selectedQuest);

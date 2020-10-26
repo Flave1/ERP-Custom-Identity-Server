@@ -174,7 +174,7 @@ namespace APIGateway.AuthGrid
             {
                 DateIssued = DateTime.Now,
                 ExpiryDate = DateTime.Now.AddMinutes(2),
-                OTP = otp.Insert(2, "-").Insert(5, "-"),
+                OTP = otp,
                 UserId = user.Id,
                 Email = user.Email,
             };
@@ -366,6 +366,7 @@ namespace APIGateway.AuthGrid
                     {
                         loginFailed = new LogingFailedChecker();
                         loginFailed.Counter = 1;
+                        loginFailed.QuestionTimeCount = 1;
                         loginFailed.RetryTime = DateTime.UtcNow.Add(setup.RetryTimeInMinutes);
                         loginFailed.Userid = usergent;
                         _security.LogingFailedChecker.Add(loginFailed);
@@ -374,7 +375,7 @@ namespace APIGateway.AuthGrid
                     }
                     else
                     {
-                        if (loginFailed.Counter >= setup.NumberOfFailedAttemptsBeforeSecurityQuestions && !setup.ShouldRetryAfterLockoutEnabled)
+                        if (loginFailed.QuestionTimeCount >= setup.NumberOfFailedAttemptsBeforeSecurityQuestions && !setup.ShouldRetryAfterLockoutEnabled)
                         {
                             response.Status.Message.FriendlyMessage = "Please proceed to answer security question";
                             response.IsSecurityQuestion = true;
@@ -382,6 +383,7 @@ namespace APIGateway.AuthGrid
                             return response;
                         }
                         loginFailed.Counter = loginFailed.Counter + 1;
+                        loginFailed.QuestionTimeCount = loginFailed.QuestionTimeCount + 1;
                         _security.Entry(loginFailed).CurrentValues.SetValues(loginFailed);
                         await _security.SaveChangesAsync();
                         if (loginFailed.Counter >= setup.NumberOfFailedLoginBeforeLockout)
@@ -402,7 +404,9 @@ namespace APIGateway.AuthGrid
                             }
                             else
                             {
-                                _security.LogingFailedChecker.Remove(loginFailed);
+                                loginFailed.Counter = 0;
+                                loginFailed.QuestionTimeCount = loginFailed.QuestionTimeCount + 1;
+                                _security.Entry(loginFailed).CurrentValues.SetValues(loginFailed); 
                                 await _security.SaveChangesAsync();
                                 return response;
                             }
@@ -410,6 +414,7 @@ namespace APIGateway.AuthGrid
                         }
                         loginFailed.RetryTime = DateTime.UtcNow.Add(setup.RetryTimeInMinutes);
                         loginFailed.Userid = usergent;
+                        loginFailed.QuestionTimeCount = loginFailed.QuestionTimeCount + 1;
                         _security.Entry(loginFailed).CurrentValues.SetValues(loginFailed);
                         await _security.SaveChangesAsync();
                         return response;
@@ -423,71 +428,78 @@ namespace APIGateway.AuthGrid
             if (_detectionService.Device.Type.ToString() == Device.Mobile.ToString()
                     && lockoutSetting.Any(e => e.EnableLoginFailedLockout && e.EnableRetryOnWebApp && e.Module == module))
             {
-                var setup = lockoutSetting.FirstOrDefault(e => e.EnableLoginFailedLockout && e.ActiveOnMobileApp && e.Module == module);
-                var failedCached = _security.LogingFailedChecker.FirstOrDefault(r => r.Userid == usergent);
-                if (isSuccessful)
-                { 
-                    if (failedCached != null)
-                    {
-                        _security.LogingFailedChecker.Remove(failedCached);
-                        await _security.SaveChangesAsync();
-                        return response;
-                    }
-                }
-                if (!isSuccessful)
+                var setup = lockoutSetting.FirstOrDefault(e => e.EnableLoginFailedLockout && e.EnableRetryOnMobileApp && e.Module == module);
+                if(setup != null)
                 {
-                    var loginFailed = _security.LogingFailedChecker.Find(usergent);
-                    if (loginFailed == null)
+                    var failedCached = _security.LogingFailedChecker.FirstOrDefault(r => r.Userid == usergent);
+                    if (isSuccessful)
                     {
-                        loginFailed = new LogingFailedChecker();
-                        loginFailed.Counter = 1;
-                        loginFailed.RetryTime = DateTime.UtcNow.Add(setup.RetryTimeInMinutes);
-                        loginFailed.Userid = usergent;
-                        _security.LogingFailedChecker.Add(loginFailed);
-                        await _security.SaveChangesAsync();
-                        return response;
-                    }
-                    else
-                    {
-                        if (loginFailed.Counter >= setup.NumberOfFailedAttemptsBeforeSecurityQuestions && !setup.ShouldRetryAfterLockoutEnabled)
+                        if (failedCached != null)
                         {
-                            response.Status.Message.FriendlyMessage = "Please proceed to answer security question";
-                            response.IsSecurityQuestion = true;
-                            response.Status.IsSuccessful = false;
+                            _security.LogingFailedChecker.Remove(failedCached);
+                            await _security.SaveChangesAsync();
                             return response;
                         }
-                        loginFailed.Counter = loginFailed.Counter + 1;
-                        _security.LogingFailedChecker.Remove(loginFailed);
-                        await _security.SaveChangesAsync();
-                        if (loginFailed.Counter >= setup.NumberOfFailedLoginBeforeLockout)
+                    }
+                    if (!isSuccessful)
+                    {
+                        var loginFailed = _security.LogingFailedChecker.Find(usergent);
+                        if (loginFailed == null)
                         {
-                            var timeRemain = (loginFailed.RetryTime - DateTime.UtcNow).Minutes + 1;
-                            if (DateTime.UtcNow < loginFailed.RetryTime)
-                            {
-                                string TimeVariable = string.Empty;
-                                TimeVariable = $"{timeRemain} minutes";
-                                if (timeRemain == 1)
-                                {
-                                    TimeVariable = $"{(loginFailed.RetryTime - DateTime.UtcNow).Seconds} seconds";
-                                }
-                                response.Status.IsSuccessful = false;
-                                response.Status.Message.FriendlyMessage = $"Please retry after  {TimeVariable}";
-                                return response;
-                            }
-                            else
-                            {
-                                _security.LogingFailedChecker.Remove(loginFailed);
-                                await _security.SaveChangesAsync();
-                                return response;
-                            }
+                            loginFailed = new LogingFailedChecker();
+                            loginFailed.Counter = 1;
+                            loginFailed.RetryTime = DateTime.UtcNow.Add(setup.RetryTimeInMinutes);
+                            loginFailed.Userid = usergent;
+                            loginFailed.QuestionTimeCount = 1;
+                            _security.LogingFailedChecker.Add(loginFailed);
+                            await _security.SaveChangesAsync();
+                            return response;
                         }
-                        loginFailed.RetryTime = DateTime.UtcNow.Add(setup.RetryTimeInMinutes);
-                        loginFailed.Userid = usergent;
-                        _security.Entry(loginFailed).CurrentValues.SetValues(loginFailed);
-                        await _security.SaveChangesAsync();
-                        return response;
-                    }   
-                }
+                        else
+                        {
+                            if (loginFailed.QuestionTimeCount >= setup.NumberOfFailedAttemptsBeforeSecurityQuestions && !setup.ShouldRetryAfterLockoutEnabled)
+                            {
+                                response.Status.Message.FriendlyMessage = "Please proceed to answer security question";
+                                response.IsSecurityQuestion = true;
+                                response.Status.IsSuccessful = false;
+                                return response;
+                            }
+                            loginFailed.Counter = loginFailed.Counter + 1;
+                            loginFailed.QuestionTimeCount = loginFailed.QuestionTimeCount + 1;
+                            _security.Entry(loginFailed).CurrentValues.SetValues(loginFailed);
+                            await _security.SaveChangesAsync();
+                            if (loginFailed.Counter >= setup.NumberOfFailedLoginBeforeLockout)
+                            {
+                                var timeRemain = (loginFailed.RetryTime - DateTime.UtcNow).Minutes + 1;
+                                if (DateTime.UtcNow < loginFailed.RetryTime)
+                                {
+                                    string TimeVariable = string.Empty;
+                                    TimeVariable = $"{timeRemain} minutes";
+                                    if (timeRemain == 1)
+                                    {
+                                        TimeVariable = $"{(loginFailed.RetryTime - DateTime.UtcNow).Seconds} seconds";
+                                    }
+                                    response.Status.IsSuccessful = false;
+                                    response.Status.Message.FriendlyMessage = $"Please retry after  {TimeVariable}";
+                                    return response;
+                                }
+                                else
+                                {
+                                    loginFailed.Counter = 0;
+                                    loginFailed.QuestionTimeCount = loginFailed.QuestionTimeCount + 1;
+                                    _security.Entry(loginFailed).CurrentValues.SetValues(loginFailed);
+                                    return response;
+                                }
+                            }
+                            loginFailed.RetryTime = DateTime.UtcNow.Add(setup.RetryTimeInMinutes);
+                            loginFailed.Userid = usergent;
+                            loginFailed.QuestionTimeCount = loginFailed.QuestionTimeCount + 1;
+                            _security.Entry(loginFailed).CurrentValues.SetValues(loginFailed);
+                            await _security.SaveChangesAsync();
+                            return response;
+                        }
+                    }
+                } 
             }
             return response;
         }

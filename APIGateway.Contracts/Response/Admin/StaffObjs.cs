@@ -7,6 +7,12 @@ namespace GODPAPIs.Contracts.Response.Admin
 {
     public class StaffObj
     {
+        public StaffObj()
+        {
+            UserAccessLevels = new List<int>();
+            UserRoleIds = new List<string>();
+            UserRoleNames = new List<string>();
+        }
         public int StaffId { get; set; }
         public string StaffCode { get; set; }
         public string FirstName { get; set; }
@@ -24,15 +30,15 @@ namespace GODPAPIs.Contracts.Response.Admin
         public decimal? StaffLimit { get; set; }
         public int? AccessLevel { get; set; }
         public int? StaffOfficeId { get; set; }
-        public IEnumerable<string> UserRoleIds { get; set; }
+        public List<string> UserRoleIds { get; set; }
         public bool? UserStatus { get; set; }
         public string UserName { get; set; }
 
         public string UserId { get; set; }
         public int AccessLevelId { get; set; }
-        public IEnumerable<int> UserAccessLevels { get; set; }
+        public List<int> UserAccessLevels { get; set; }
 
-        public IEnumerable<string> UserRoleNames { get; set; }
+        public List<string> UserRoleNames { get; set; }
         public string ExcelUserRoleNames { get; set; }
         //...............................
         public string JobTitleName { get; set; }

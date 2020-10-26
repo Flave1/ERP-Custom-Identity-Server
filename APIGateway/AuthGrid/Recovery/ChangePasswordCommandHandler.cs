@@ -1,5 +1,6 @@
 ﻿using APIGateway.Contracts.Commands.Email;
 using APIGateway.Contracts.Response.Recovery;
+using APIGateway.Extensions;
 using APIGateway.MailHandler;
 using APIGateway.MailHandler.Service;
 using GODP.APIsContinuation.DomainObjects.UserAccount;
@@ -52,8 +53,7 @@ namespace APIGateway.AuthGrid.Recovery
                     Subject = sm.Subject,
                     Content = messageBody,
                     FromAddresses = new List<EmailAddress>(), 
-                    SendIt = true,
-                    
+                    SendIt = true,  
                 };
                 
                 em.ToAddresses = new List<EmailAddress>();
@@ -82,14 +82,29 @@ namespace APIGateway.AuthGrid.Recovery
                     var user = await _userManager.FindByEmailAsync(request.Email);
                     if(user != null)
                     {
-                        var passChanged = await _userManager.ResetPasswordAsync(user, request.Token, request.NewPassword);
+                        var decodedToken = CustomEncoder.Base64Decode(request.Token);
+                        var passChanged = await _userManager.ResetPasswordAsync(user, decodedToken, request.NewPassword);
                         if (!passChanged.Succeeded)
                         {
                             response.Status.Message.FriendlyMessage = passChanged.Errors.FirstOrDefault().Description;
                             return response;
                         }
+                        user.IsQuestionTime = false;
+                        user.EnableAt = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1));
+                        var updated = await _userManager.UpdateAsync(user);
+                        if (!updated.Succeeded)
+                        {
+                            response.Status.Message.FriendlyMessage = updated.Errors.FirstOrDefault().Description;
+                            return response;
+                        }
+                        await RecoveryMail(request.Email);
                     }
-                    await RecoveryMail(request.Email);
+                    else
+                    {
+                        response.Status.Message.FriendlyMessage = "Unidentified Email";
+                        return response;
+                    }
+                    
                     response.Status.IsSuccessful = true;
                     response.Status.Message.FriendlyMessage = "Password has successfully been changed";
                     return response;
