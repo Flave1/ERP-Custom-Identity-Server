@@ -126,7 +126,7 @@ namespace APIGateway.MailHandler.Send_Recieve_Handler
 					}
 					em.Content = string.Format(builder.HtmlBody, request.Content.Replace("{", "").Replace("}", ""), "flave");
 				}
-				  
+				em.Module = (int)Modules.CENTRAL;
 				if (request.SendIt) await _email.Send(em);
 
 				response.ResponseStatus = (int)EmailStatus.Sent;

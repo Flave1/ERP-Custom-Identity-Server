@@ -1,5 +1,6 @@
 ﻿using APIGateway.AuthGrid;
 using APIGateway.Data;
+using APIGateway.DomainObjects.Credit;
 using GODP.APIsContinuation.DomainObjects.Operation;
 using GODP.APIsContinuation.DomainObjects.Others;
 using GODP.APIsContinuation.DomainObjects.UserAccount;
@@ -25,7 +26,9 @@ namespace APIGateway.Handlers.Seeder
                           new cor_activityparent{ ActivityParentId = 5, ActivityParentName = "Finance", Deleted = false, Active = true, }, 
                             new cor_activityparent{ ActivityParentId = 6, ActivityParentName = "Credit", Deleted = false, Active = true, },
                              new cor_activityparent{ ActivityParentId = 7, ActivityParentName = "Investor Fund", Deleted = false, Active = true, },
-                              new cor_activityparent{ ActivityParentId = 8, ActivityParentName = "Treasury", Deleted = false, Active = true, }, 
+                              new cor_activityparent{ ActivityParentId = 8, ActivityParentName = "Treasury", Deleted = false, Active = true, },
+                               new cor_activityparent{ ActivityParentId = 9, ActivityParentName = "PPE", Deleted = false, Active = true, },
+                               new cor_activityparent{ ActivityParentId = 10, ActivityParentName = "Deposit", Deleted = false, Active = true, },
 
             };
             using (var transaction = context.Database.BeginTransaction())
@@ -61,7 +64,9 @@ namespace APIGateway.Handlers.Seeder
                     new cor_operationtype { OperationTypeId = 4, ModuleId = 5, OperationTypeName = "Finance", Deleted = false, Active = true },
                     new cor_operationtype { OperationTypeId = 5, ModuleId = 6, OperationTypeName = "Loan management", Deleted = false, Active = true },
                     new cor_operationtype { OperationTypeId = 6, ModuleId = 7, OperationTypeName = "InvestorFund", Deleted = false, Active = true },
-                    new cor_operationtype { OperationTypeId = 7, ModuleId = 8, OperationTypeName = "Treasury", Deleted = false, Active = true }
+                    new cor_operationtype { OperationTypeId = 7, ModuleId = 8, OperationTypeName = "Treasury", Deleted = false, Active = true },
+                     new cor_operationtype { OperationTypeId = 8, ModuleId = 9, OperationTypeName = "PPE", Deleted = false, Active = true },
+                     new cor_operationtype { OperationTypeId = 9, ModuleId = 10, OperationTypeName = "Deposit", Deleted = false, Active = true }
             }; 
             using (var transaction = context.Database.BeginTransaction())
             {
@@ -256,6 +261,22 @@ namespace APIGateway.Handlers.Seeder
                  new cor_activity{ ActivityId = 153, ActivityParentId = 8, ActivityName = "issuer registration", Deleted = false, Active = true, },
                  new cor_activity{ ActivityId = 154, ActivityParentId = 8, ActivityName = "tre collection appraisal", Deleted = false, Active = true, },
 
+                 new cor_activity{ ActivityId = 155, ActivityParentId = 9, ActivityName = "ppe", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 156, ActivityParentId = 9, ActivityName = "ppe set up", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 157, ActivityParentId = 9, ActivityName = "asset classification", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 158, ActivityParentId = 9, ActivityName = "addition", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 159, ActivityParentId = 9, ActivityName = "addition appraisal", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 160, ActivityParentId = 9, ActivityName = "register", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 161, ActivityParentId = 9, ActivityName = "reassessment", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 162, ActivityParentId = 9, ActivityName = "reassessment appraisal", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 163, ActivityParentId = 9, ActivityName = "revaluation", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 164, ActivityParentId = 9, ActivityName = "revaluation appraisal", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 165, ActivityParentId = 9, ActivityName = "disposal", Deleted = false, Active = true, },
+                 new cor_activity{ ActivityId = 166, ActivityParentId = 9, ActivityName = "disposal approval", Deleted = false, Active = true, },
+
+                 new cor_activity{ ActivityId = 167, ActivityParentId = 10, ActivityName = "deposit", Deleted = false, Active = true, },
+
+
             };
             using (var transaction = context.Database.BeginTransaction())
             {
@@ -290,27 +311,27 @@ namespace APIGateway.Handlers.Seeder
                     new cor_operation { OperationId =  4, OperationName = "Customer Registration Approval", OperationTypeId = 1, EnableWorkflow = true, Deleted = false, Active = true},
                     new cor_operation { OperationId =  5, OperationName = "Purchase LPO Approval", OperationTypeId = 2, EnableWorkflow = true, Deleted = false, Active = true},
                     new cor_operation { OperationId =  6, OperationName = "Purchase PRN Approval", OperationTypeId = 2, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  7, OperationName = "ProductDefinitionApproval", OperationTypeId = 3, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  8, OperationName = "Loan Customer Approval", OperationTypeId = 3, EnableWorkflow = true, Deleted = false, Active = true},
+                    new cor_operation { OperationId =  7, OperationName = "ProductDefinitionApproval", OperationTypeId = 3, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  8, OperationName = "Loan Customer Approval", OperationTypeId = 3, EnableWorkflow = false, Deleted = true, Active = true},
                     new cor_operation { OperationId =  9, OperationName = "Loan Application Approval", OperationTypeId = 3, EnableWorkflow = true, Deleted = false, Active = true},
                     new cor_operation { OperationId =  10, OperationName = "Loan Booking Approval", OperationTypeId = 3, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  11, OperationName = "Daily Interest Accural", OperationTypeId = 3, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  12, OperationName = "Interest Loan Repayment", OperationTypeId = 3, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  13, OperationName = "Principal Loan Repayment", OperationTypeId = 3, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  14, OperationName = "Customer Collateral Approval", OperationTypeId = 3, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  15, OperationName = "Casa Account Approval", OperationTypeId = 3, EnableWorkflow = true, Deleted = false, Active = true},
+                    new cor_operation { OperationId =  11, OperationName = "Daily Interest Accural", OperationTypeId = 3, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  12, OperationName = "Interest Loan Repayment", OperationTypeId = 3, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  13, OperationName = "Principal Loan Repayment", OperationTypeId = 3, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  14, OperationName = "Customer Collateral Approval", OperationTypeId = 3, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  15, OperationName = "Casa Account Approval", OperationTypeId = 3, EnableWorkflow = false, Deleted = true, Active = true},
                     new cor_operation { OperationId =  16, OperationName = "Loan Review Application", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  17, OperationName = "Charge Reversal", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  18, OperationName = "Principal Frequency Change", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  19, OperationName = "Contractual Interest Rate Change", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
+                    new cor_operation { OperationId =  17, OperationName = "Charge Reversal", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  18, OperationName = "Principal Frequency Change", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  19, OperationName = "Contractual Interest Rate Change", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
                     new cor_operation { OperationId =  20, OperationName = "Prepayment", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  21, OperationName = "Principal Frequency Change", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  22, OperationName = "Interest Frequency Change", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  23, OperationName = "Interestand Principal Frequency Change", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  24, OperationName = "Payment Date Change", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  25, OperationName = "Tenor Change", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  26, OperationName = "Loan Termination", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  27, OperationName = "Restructured", OperationTypeId = 5, EnableWorkflow = true, Deleted = false, Active = true},
+                    new cor_operation { OperationId =  21, OperationName = "Principal Frequency Change", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  22, OperationName = "Interest Frequency Change", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  23, OperationName = "Interestand Principal Frequency Change", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  24, OperationName = "Payment Date Change", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  25, OperationName = "Tenor Change", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  26, OperationName = "Loan Termination", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
+                    new cor_operation { OperationId =  27, OperationName = "Restructured", OperationTypeId = 5, EnableWorkflow = false, Deleted = true, Active = true},
                     new cor_operation { OperationId =  28, OperationName = "Loan Disburment Transaction", OperationTypeId = 4, EnableWorkflow = true, Deleted = false, Active = true},
                     new cor_operation { OperationId =  29, OperationName = "Deposit Form Submit", OperationTypeId = 4, EnableWorkflow = true, Deleted = false, Active = true},
                     new cor_operation { OperationId =  30, OperationName = "Journal Entries", OperationTypeId = 4, EnableWorkflow = true, Deleted = false, Active = true},
@@ -320,11 +341,14 @@ namespace APIGateway.Handlers.Seeder
                     new cor_operation { OperationId =  34, OperationName = "Treasury Investment Approval", OperationTypeId = 7, EnableWorkflow = true, Deleted = false, Active = true},
                     new cor_operation { OperationId =  35, OperationName = "Treasury Liquidation Approval", OperationTypeId = 7, EnableWorkflow = true, Deleted = false, Active = true},
                     new cor_operation { OperationId =  36, OperationName = "Treasury Collection Approval", OperationTypeId = 7, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  37, OperationName = "PPE Addition Approval", OperationTypeId = 2, EnableWorkflow = true, Deleted = false, Active = true},
+                    new cor_operation { OperationId =  37, OperationName = "PPE Addition Approval", OperationTypeId = 8, EnableWorkflow = true, Deleted = false, Active = true},
                     new cor_operation { OperationId =  38, OperationName = "Payment Approval", OperationTypeId = 2, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  39, OperationName = "PPEReassessment", OperationTypeId = 2, EnableWorkflow = true, Deleted = false, Active = true},
-                    new cor_operation { OperationId =  40, OperationName = "PPEDisposal", OperationTypeId = 2, EnableWorkflow = true, Deleted = false, Active = true},
+                    new cor_operation { OperationId =  39, OperationName = "PPEReassessment", OperationTypeId = 8, EnableWorkflow = true, Deleted = false, Active = true},
+                    new cor_operation { OperationId =  40, OperationName = "PPEDisposal", OperationTypeId = 8, EnableWorkflow = true, Deleted = false, Active = true},
                     new cor_operation { OperationId =  41, OperationName = "BidAndTenders", OperationTypeId = 2, EnableWorkflow = true, Deleted = false, Active = true},
+                    new cor_operation { OperationId =  42, OperationName = "PPERevaluation", OperationTypeId = 8, EnableWorkflow = true, Deleted = false, Active = true},
+                     new cor_operation { OperationId =  43, OperationName = "Bank Account Closure", OperationTypeId = 9, EnableWorkflow = true, Deleted = false, Active = true},
+                     new cor_operation { OperationId =  44, OperationName = "Change of Rate", OperationTypeId = 9, EnableWorkflow = true, Deleted = false, Active = true},
 
                 }; 
             using (var transaction = context.Database.BeginTransaction())
@@ -634,6 +658,35 @@ namespace APIGateway.Handlers.Seeder
             }
         }
 
+        public static void SeedDoctypes(DataContext context)
+        {
+            var doctypes = new List<credit_documenttype>
+            {
+                    new credit_documenttype { DocumentTypeId = 1,  Name = "Signature", Deleted = false, Active = true }, 
+            };
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    foreach (var item in doctypes)
+                    {
+                        if (!context.credit_documenttype.Any(w => w.DocumentTypeId == item.DocumentTypeId))
+                        {
+                            context.Add(item);
+                            context.SaveChanges();
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+                finally { transaction.Dispose(); }
+            }
+        }
+
         public static void SeedEmploymentType(DataContext context)
         {
             var genders = new List<cor_employertype>
@@ -672,15 +725,16 @@ namespace APIGateway.Handlers.Seeder
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<DataContext>();
 
-                //SeedGender(context);
-                //SeedMaritalStatus(context);
-                //SeedTitles(context);
-                //SeedEmploymentType(context);
-                //SeedActivitParents(context);
-                //SeedActivities(context);
-                //SeedOperationType(context);
-                //SeedOperation(context);
-                //SeedAuthenticationSecuritySetting(context);
+                SeedGender(context);
+                SeedMaritalStatus(context);
+                SeedTitles(context);
+                SeedEmploymentType(context);
+                SeedActivitParents(context);
+                SeedActivities(context);
+                SeedOperationType(context);
+                SeedOperation(context);
+                SeedAuthenticationSecuritySetting(context);
+                SeedDoctypes(context);
             }
             return host;
         }

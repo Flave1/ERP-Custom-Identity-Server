@@ -6,6 +6,6 @@ namespace APIGateway.Contracts.V1
 {
     public static class CacheKeys
     {
-        public const string AuthSettings  = "authsettings"; 
+        public const string AuthSettings  = "authsettings";  
     }
 }

@@ -1,6 +1,7 @@
 ﻿using APIGateway.Repository.Interface.Workflow;
 using GODP.APIsContinuation.DomainObjects.UserAccount;
 using GODP.APIsContinuation.Repository.Interface.Admin;
+using GOSLibraries.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity; 

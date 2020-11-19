@@ -67,12 +67,9 @@ namespace APIGateway.MailHandler.Send_Recieve_Handler
 					var useraccount = await _userManager.FindByEmailAsync(recr.Address);
 					if(useraccount != null)
 					{
-						request.UserId = useraccount.Id;
+						request.UserIds = useraccount.Id;
 					}
-				}
-
-
-
+				} 
 
 				var em = await _email.BuildAndSaveEmail(request);
 				em.SendIt = request.SendIt;

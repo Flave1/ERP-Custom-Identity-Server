@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace APIGateway.Migrations
 {
-    public partial class INITIAL_MIGRATION : Migration
+    public partial class Initial_migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,8 +49,6 @@ namespace APIGateway.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     StaffId = table.Column<int>(nullable: false),
                     IsFirstLoginAttempt = table.Column<bool>(nullable: false),
-                    SecurityQuestion = table.Column<string>(maxLength: 256, nullable: true),
-                    SecurityAnswer = table.Column<string>(maxLength: 256, nullable: true),
                     NextPasswordChangeDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     LastLoginDate = table.Column<DateTime>(nullable: true),
@@ -59,7 +57,11 @@ namespace APIGateway.Migrations
                     CreatedBy = table.Column<string>(maxLength: 50, nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: true),
                     UpdatedBy = table.Column<string>(maxLength: 50, nullable: true),
-                    UpdatedOn = table.Column<DateTime>(nullable: true)
+                    UpdatedOn = table.Column<DateTime>(nullable: true),
+                    SecurityAnswer = table.Column<string>(maxLength: 256, nullable: true),
+                    QuestionId = table.Column<int>(nullable: false),
+                    IsQuestionTime = table.Column<bool>(nullable: false),
+                    EnableAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -472,8 +474,7 @@ namespace APIGateway.Migrations
                 name: "credit_documenttype",
                 columns: table => new
                 {
-                    DocumentTypeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DocumentTypeId = table.Column<int>(nullable: false),
                     Active = table.Column<bool>(nullable: true),
                     Deleted = table.Column<bool>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -533,12 +534,27 @@ namespace APIGateway.Migrations
                     SentBy = table.Column<string>(nullable: true),
                     ReceivedBy = table.Column<string>(nullable: true),
                     ReceiverUserId = table.Column<string>(nullable: true),
+                    Module = table.Column<int>(nullable: false),
                     DateSent = table.Column<DateTime>(nullable: false),
                     SendIt = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EmailMessage", x => x.EmailMessageId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LogingFailedChecker",
+                columns: table => new
+                {
+                    Userid = table.Column<string>(nullable: false),
+                    Counter = table.Column<int>(nullable: false),
+                    QuestionTimeCount = table.Column<int>(nullable: false),
+                    RetryTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogingFailedChecker", x => x.Userid);
                 });
 
             migrationBuilder.CreateTable(
@@ -563,6 +579,19 @@ namespace APIGateway.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OTPTracker", x => x.OTPId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Questions",
+                columns: table => new
+                {
+                    QuestionId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Question = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Questions", x => x.QuestionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -603,20 +632,35 @@ namespace APIGateway.Migrations
                     ActiveDirectory = table.Column<string>(nullable: true),
                     EnableLoginFailedLockout = table.Column<bool>(nullable: false),
                     NumberOfFailedLoginBeforeLockout = table.Column<int>(nullable: false),
-                    RetryTimeInMinutes = table.Column<int>(nullable: false),
+                    NumberOfFailedAttemptsBeforeSecurityQuestions = table.Column<int>(nullable: false),
+                    RetryTimeInMinutes = table.Column<TimeSpan>(nullable: false),
                     EnableRetryOnMobileApp = table.Column<bool>(nullable: false),
                     EnableRetryOnWebApp = table.Column<bool>(nullable: false),
                     ShouldRetryAfterLockoutEnabled = table.Column<bool>(nullable: false),
-                    InActiveSessionTimeout = table.Column<int>(nullable: false),
+                    InActiveSessionTimeout = table.Column<TimeSpan>(nullable: false),
                     PasswordUpdateCycle = table.Column<int>(nullable: false),
                     SecuritySettingActiveOnMobileApp = table.Column<bool>(nullable: false),
                     SecuritySettingsActiveOnWebApp = table.Column<bool>(nullable: false),
                     EnableLoadBalance = table.Column<bool>(nullable: false),
-                    LoadBalanceInHours = table.Column<int>(nullable: false)
+                    LoadBalanceInHours = table.Column<int>(nullable: false),
+                    WhenNextToUpdatePassword = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ScrewIdentifierGrid", x => x.ScrewIdentifierGridId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SessionChecker",
+                columns: table => new
+                {
+                    Userid = table.Column<string>(nullable: false),
+                    Module = table.Column<int>(nullable: false),
+                    LastRefreshed = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SessionChecker", x => x.Userid);
                 });
 
             migrationBuilder.CreateTable(
@@ -1679,13 +1723,22 @@ namespace APIGateway.Migrations
                 name: "EmailMessage");
 
             migrationBuilder.DropTable(
+                name: "LogingFailedChecker");
+
+            migrationBuilder.DropTable(
                 name: "OTPTracker");
+
+            migrationBuilder.DropTable(
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "RefreshTokens");
 
             migrationBuilder.DropTable(
                 name: "ScrewIdentifierGrid");
+
+            migrationBuilder.DropTable(
+                name: "SessionChecker");
 
             migrationBuilder.DropTable(
                 name: "SolutionModule");

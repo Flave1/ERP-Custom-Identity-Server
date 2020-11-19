@@ -437,7 +437,7 @@ namespace APIGateway.Handlers.Workflow
             sm.SendIt = true;
             sm.SaveIt = true;
             var mailSent = await _email.BuildAndSaveEmail(sm);
-
+            
             EmailMessage em = new EmailMessage
             {
                 Subject = sm.Subject,
@@ -446,6 +446,7 @@ namespace APIGateway.Handlers.Workflow
                 ToAddresses = _mapper.Map<List<EmailAddress>>(sm.ToAddresses),
                 SendIt = true,
         };
+            em.Module = (int)Modules.CENTRAL;
             await _email.Send(em);
         }
 

@@ -37,6 +37,7 @@ namespace GODPAPIs.Contracts.V1
             public const string CONFIRM_CODE = Base + "/identity/confirmCode";
             public const string RECOVER_PASSWORD_BY_EMAIL = Base + "/identity/recoverpassword/byemail";
             public const string NEW_PASS = Base + "/identity/newpassword";
+            public const string UPDATE_PASS = Base + "/identity/update/password";
         }
 
         public static class PersmissionsEndpoint

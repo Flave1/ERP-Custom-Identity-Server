@@ -97,41 +97,30 @@ namespace APIGateway.Validations.Admin
 
             RuleFor(x => x.Password)
                 .NotEmpty();
-                //.MinimumLength(8)
-                //.MaximumLength(16)
-            //    .MustAsync(IsPasswordCharactersValid).WithMessage("Invalid Password");
             RuleFor(a => a.UserName).NotEmpty();
-            //RuleFor(c => c).MustAsync(UserExist).WithMessage("User does not exist")
-            //    .MustAsync(IsValidPassword).WithMessage("User/Password Combination is wrong");
+            RuleFor(a => a).MustAsync(IsPasswordUodateCycleDue).WithMessage("Please change password");
         }
-        
-        private async Task<bool> IsValidPassword(LoginCommand request, CancellationToken cancellation)
+
+
+
+
+    private async Task<bool> IsPasswordUodateCycleDue(LoginCommand request, CancellationToken cancellation)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
             var isValidPass = await _userManager.CheckPasswordAsync(user, request.Password);
-            if (!isValidPass)
+            if(user != null)
             {
-                return await Task.Run(() => false); 
+                if (isValidPass)
+                {
+                    if (user.NextPasswordChangeDate.Value.Date <= DateTime.UtcNow.Date)
+                    {
+                        return await Task.Run(() => false);
+                    }
+                }
             }
             return await Task.Run(() => true);
         }
-        private async Task<bool> UserExist(LoginCommand request, CancellationToken cancellation)
-        {
-            var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null)
-            {
-                return await Task.Run(() => false); 
-            }
-            return await Task.Run(() => true);
-        }
-        private async Task<bool> IsPasswordCharactersValid(string password, CancellationToken cancellationToken)
-        {
-            var hasNumber = new Regex(@"[0-9]+");
-            var hasUpperChar = new Regex(@"[A-Z]+");
-            var hasMinimum8Chars = new Regex(@".{8,}");
-
-            return await Task.Run(() => hasNumber.IsMatch(password) && hasUpperChar.IsMatch(password) && hasMinimum8Chars.IsMatch(password)); 
-        }
+        
     }
 
     public class OTPLoginCommandValidator : AbstractValidator<OTPLoginCommand>

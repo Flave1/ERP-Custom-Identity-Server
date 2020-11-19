@@ -26,9 +26,8 @@ namespace APIGateway.Controllers.V1
         }
         
         [HttpGet(ApiRoutes.EmailEndpoint.GET_USER_EMAILS)]
-        public async Task<IActionResult> GET_USER_EMAILS()
-        {
-            var query = new GetCurrentUserMailsQuery();
+        public async Task<IActionResult> GET_USER_EMAILS([FromQuery] GetCurrentUserMailsQuery query)
+        { 
             return Ok(await _mediator.Send(query)); 
         }
         [HttpGet(ApiRoutes.EmailEndpoint.GET_SINGLE_EMAIL)]

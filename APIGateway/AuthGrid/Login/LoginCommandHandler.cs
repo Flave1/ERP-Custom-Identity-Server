@@ -52,7 +52,6 @@ namespace APIGateway.AuthGrid.Login
         {
             try
             {
-                _logger.Information("Have just entered otp method");
                 var response = new AuthResponse { Status = new APIResponseStatus { IsSuccessful = true, Message = new APIResponseMessage() } };
                 var multiplefFA = await _securityContext.ScrewIdentifierGrid.Where(a => a.Module == (int)Modules.CENTRAL).ToListAsync();
                 var user = await _userManager.FindByIdAsync(userid);
@@ -60,10 +59,8 @@ namespace APIGateway.AuthGrid.Login
                 {
                     if (_detectionService.Device.Type.ToString().ToLower() == Device.Desktop.ToString().ToLower())
                     {
-                        _logger.Information("I am in desktop check");
                         if (multiplefFA.FirstOrDefault(a => a.Media == (int)Media.EMAIL && a.Module == (int)Modules.CENTRAL).ActiveOnWebApp)
                         {
-                            _logger.Information("I am in email check");
                             await _measure.SendOTPToEmailAsync(user);
                             response.Status.Message.FriendlyMessage = "OTP Verification Code sent to your email";
                             return response;
@@ -129,7 +126,7 @@ namespace APIGateway.AuthGrid.Login
                 else
                     lockoutSetting = await _securityContext.ScrewIdentifierGrid.ToListAsync();
 
-                await _cacheService.CatcheResponseAsync(CacheKeys.AuthSettings, lockoutSetting, TimeSpan.FromSeconds(3600));
+                await _cacheService.CatcheResponseAsync(CacheKeys.AuthSettings, lockoutSetting, TimeSpan.FromSeconds(86400));
 
                 if (!await IsPasswordCharactersValid(request.Password))
                 {
@@ -151,7 +148,7 @@ namespace APIGateway.AuthGrid.Login
                 }
 
                 var user = await _userManager.FindByNameAsync(request.UserName);
-
+                 
                 var otp = await OTPOptionsAsync(user.Id);
                 if (otp.Status.IsSuccessful)
                 { 
@@ -159,7 +156,6 @@ namespace APIGateway.AuthGrid.Login
                     return otp;
                 }
 
-                
                 var result = await _service.LoginAsync(user);
 
                 var measure = Measures.CollectAsMuchAsPossible(user, result, _detectionService); 

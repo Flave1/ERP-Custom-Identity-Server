@@ -4,6 +4,7 @@ using GODPAPIs.Contracts.RequestResponse;
 using GOSLibraries.GOS_API_Response;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace GODPAPIs.Contracts.Response.Admin
@@ -94,5 +95,17 @@ namespace GODPAPIs.Contracts.Response.Admin
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public int UserCount { get; set; }
+    }
+
+    public class Tracked
+    {
+        public int MeasureId { get; set; }
+        public string UserId { get; set; }
+        public string Token { get; set; }
+    }
+    public class TrackerResp
+    { 
+        public HttpStatusCode StatusCode{ get; set; }
+        public APIResponseStatus Status { get; set; }
     }
 }

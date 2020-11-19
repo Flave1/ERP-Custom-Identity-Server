@@ -23,6 +23,7 @@ namespace APIGateway.MailHandler
 		public string SentBy { get; set; }
 		public string ReceivedBy { get; set; }
 		public string ReceiverUserId { get; set; }
+		public int Module { get; set; }
 		public DateTime DateSent { get; set; }
 		public bool SendIt { get; set; }
 		[NotMapped]

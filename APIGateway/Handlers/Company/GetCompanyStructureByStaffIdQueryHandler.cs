@@ -52,7 +52,7 @@ namespace APIGateway.Handlers.Ccompany
                         operatingLevel = compDef.OperatingLevel ?? 0;
                     }
                 }
-                var user = await _userManager.Users.FirstOrDefaultAsync(x => x.StaffId == request.StaffId);
+                var user = await _dataContext.Users.FirstOrDefaultAsync(x => x.StaffId == request.StaffId);
                 var useraccess = _dataContext.cor_useraccess.Where(x => x.UserId == user.Id).ToList();
                 if (useraccess != null)
                 {
@@ -60,7 +60,7 @@ namespace APIGateway.Handlers.Ccompany
                     {
                         if (item.AccessLevelId == groupComp.CompanyStructureId)
                         {
-                            var structType = _dataContext.cor_companystructuredefinition.Where(x => x.Deleted == false && x.StructureLevel <= operatingLevel).ToList();
+                            var structType = _dataContext?.cor_companystructuredefinition?.Where(x => x.Deleted == false && x.StructureLevel <= operatingLevel)?.ToList();
                             if (structType != null)
                             {
                                 foreach (var s in structType)

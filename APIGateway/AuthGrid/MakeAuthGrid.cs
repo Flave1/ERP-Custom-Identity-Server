@@ -68,7 +68,34 @@ namespace APIGateway.AuthGrid
 
 				_security.Entry(other).CurrentValues.SetValues(other);
 
-				await _security.SaveChangesAsync();
+				using(var trans = await _security.Database.BeginTransactionAsync())
+				{
+					try
+					{
+						if(domain.Module == (int)Modules.CENTRAL)
+						{
+							var allUser = await _security.Users.ToListAsync();
+							if (allUser.Count() > 0)
+							{
+								foreach (var user in allUser)
+								{
+									user.NextPasswordChangeDate = DateTime.UtcNow.AddDays(domain.PasswordUpdateCycle);
+								}
+							}
+						}
+						
+						await _security.SaveChangesAsync();
+						await trans.CommitAsync();
+					}
+					catch (Exception e)
+					{
+						await trans.RollbackAsync();
+						response.Status.Message.FriendlyMessage = e?.Message;
+						response.Status.IsSuccessful = false;
+						return response;
+					}
+					finally { await trans.DisposeAsync(); }
+				}
 
 				var authsetting = await _security.ScrewIdentifierGrid.ToListAsync();
 				await _cacheService.ResetCacheAsync(CacheKeys.AuthSettings);

@@ -5,6 +5,7 @@ using APIGateway.MailHandler;
 using APIGateway.MailHandler.Service;
 using GODP.APIsContinuation.DomainObjects.UserAccount;
 using GODPAPIs.Contracts.Response.Admin;
+using GOSLibraries.Enums;
 using GOSLibraries.GOS_API_Response;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -51,10 +52,11 @@ namespace APIGateway.Handlers.Admin
                     Subject = Subject,
                     Content = Content,
                     ToAddresses = adds,
-                    FromAddresses = new List<EmailAddress>()
+                    FromAddresses = new List<EmailAddress>(),
+
                 };
                 em.SendIt = true;
-                
+                em.Module = (int)Modules.CENTRAL;
                 await _email.Send(em);
             }
             public async Task<StaffRegRespObj> Handle(ResetStaffProfileCommand request, CancellationToken cancellationToken)
@@ -81,6 +83,7 @@ namespace APIGateway.Handlers.Admin
                                 user.EnableAt = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1));
                                 user.IsActive = true;
                                 user.IsQuestionTime = false;
+                                user.NextPasswordChangeDate = DateTime.UtcNow.AddDays(_dataContext.ScrewIdentifierGrid.FirstOrDefault(r => r.Module == (int)Modules.CENTRAL)?.PasswordUpdateCycle??365);
                                 var accountResetted = await _context.UpdateAsync(user);
                                 if (!accountResetted.Succeeded)
                                 {
@@ -98,6 +101,7 @@ namespace APIGateway.Handlers.Admin
                             }
                             await trans.CommitAsync();
                             response.Status.Message.FriendlyMessage = $"Account reset Successful <b/> Account login details sent to staff email";
+                            response.Status.IsSuccessful = true;
                             return response;
                         }
                         catch (Exception e)

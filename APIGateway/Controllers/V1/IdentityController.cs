@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks; 
+﻿using System.Threading.Tasks;
 using GODP.APIsContinuation.Repository.Interface;
-using GODPAPIs.Contracts.Commands.UserAccount; 
-using GODPAPIs.Contracts.V1; 
+using GODPAPIs.Contracts.Commands.UserAccount;
+using GODPAPIs.Contracts.V1;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;  
+using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using GOSLibraries.GOS_Financial_Identity;
 using APIGateway.ActivityRequirement;
@@ -15,7 +15,7 @@ using Puchase_and_payables.Handlers.Supplier.Settup;
 using APIGateway.AuthGrid.Recovery;
 
 namespace Libraryhub.Controllers.V1
-{ 
+{
     public class IdentityController : Controller
     {
         private readonly IIdentityRepoService _identityService; 
@@ -97,7 +97,17 @@ namespace Libraryhub.Controllers.V1
                 return Ok(response);
             return BadRequest(response);
         }
+
+        [HttpPost(ApiRoutes.Identity.UPDATE_PASS)]
+        public async Task<IActionResult> UPDATE_PASS([FromBody] ChangeOldPasswordCommand command)
+        {
+            var response = await _mediator.Send(command);
+            if (response.Status.IsSuccessful)
+                return Ok(response);
+            return BadRequest(response);
+        }
         
+
         #region Lookat
         [HttpPost(ApiRoutes.Identity.REFRESHTOKEN)]
         public async Task<IActionResult> Refresh([FromBody] UserRefreshTokenReqObj request)

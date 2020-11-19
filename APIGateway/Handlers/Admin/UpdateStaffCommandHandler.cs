@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using APIGateway.Contracts.Commands.Email;
 using APIGateway.MailHandler;
 using APIGateway.MailHandler.Service;
+using GOSLibraries.Enums;
 
 namespace GODP.APIsContinuation.Handlers.Admin
 {
@@ -274,6 +275,7 @@ namespace GODP.APIsContinuation.Handlers.Admin
             sm.ToAddresses.Add(new EmailAddressCommand { Address = email, Name = name });
             var mailSent = await _email.BuildAndSaveEmail(sm);
 
+            
             EmailMessage em = new EmailMessage {
                 Subject = sm.Subject,
                 Content = sm.Content,
@@ -281,6 +283,7 @@ namespace GODP.APIsContinuation.Handlers.Admin
                 ToAddresses = _mapper.Map<List<EmailAddress>>(sm.ToAddresses),
             };
             sm.SendIt = true;
+            em.Module = (int)Modules.CENTRAL;
             await _email.Send(em);
         }
     }

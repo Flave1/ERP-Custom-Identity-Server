@@ -151,6 +151,9 @@ namespace APIGateway.Migrations
                     b.Property<bool>("UseActiveDirectory")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("WhenNextToUpdatePassword")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("ScrewIdentifierGridId");
 
                     b.ToTable("ScrewIdentifierGrid");
@@ -330,9 +333,7 @@ namespace APIGateway.Migrations
             modelBuilder.Entity("APIGateway.DomainObjects.Credit.credit_documenttype", b =>
                 {
                     b.Property<int>("DocumentTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<bool?>("Active")
                         .HasColumnType("bit");
@@ -622,6 +623,9 @@ namespace APIGateway.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("EmailStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Module")
                         .HasColumnType("int");
 
                     b.Property<string>("ReceivedBy")

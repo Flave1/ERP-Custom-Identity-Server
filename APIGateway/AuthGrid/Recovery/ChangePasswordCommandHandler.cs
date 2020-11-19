@@ -1,9 +1,11 @@
 ﻿using APIGateway.Contracts.Commands.Email;
 using APIGateway.Contracts.Response.Recovery;
+using APIGateway.Data;
 using APIGateway.Extensions;
 using APIGateway.MailHandler;
 using APIGateway.MailHandler.Service;
 using GODP.APIsContinuation.DomainObjects.UserAccount;
+using GOSLibraries.Enums;
 using GOSLibraries.GOS_API_Response;
 using GOSLibraries.URI;
 using MediatR;
@@ -58,21 +60,23 @@ namespace APIGateway.AuthGrid.Recovery
                 
                 em.ToAddresses = new List<EmailAddress>();
                 em.ToAddresses.Add(new EmailAddress { Address = email, Name = email });
-
+               
                 await _email.Send(em);
             }
 
             private readonly IBaseURIs _uRIs;
             private readonly IEmailService _email;
             private readonly IWebHostEnvironment _env;
+            private readonly DataContext _dataContext;
             private readonly UserManager<cor_useraccount> _userManager;
-            public ChangePasswordCommandHandler(IBaseURIs uRIs, IEmailService email, 
+            public ChangePasswordCommandHandler(IBaseURIs uRIs, IEmailService email, DataContext dataContext,
                 IWebHostEnvironment webHostEnvironment, UserManager<cor_useraccount> userManager)
             {
                 _uRIs = uRIs;
                 _email = email;
                 _userManager = userManager;
                 _env = webHostEnvironment;
+                _dataContext = dataContext;
             }
             public async Task<RecoveryResp> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
             {
@@ -91,6 +95,7 @@ namespace APIGateway.AuthGrid.Recovery
                         }
                         user.IsQuestionTime = false;
                         user.EnableAt = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1));
+                        user.NextPasswordChangeDate = DateTime.UtcNow.AddDays(_dataContext.ScrewIdentifierGrid.FirstOrDefault(r => r.Module == (int)Modules.CENTRAL)?.PasswordUpdateCycle ?? 365);
                         var updated = await _userManager.UpdateAsync(user);
                         if (!updated.Succeeded)
                         {

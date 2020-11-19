@@ -39,8 +39,10 @@ namespace APIGateway.Contracts.Commands.Email
 		public List<EmailAddressCommand> ToAddresses { get; set; }
 		public List<EmailAddressCommand> FromAddresses { get; set; }
 		//public List<byte[]> Attachments { get; set; }
-		public bool SendIt { get; set; }
-		public string UserId { get; set; }
+		public bool SendIt { get; set; } 
+		public string UserIds { get; set; }
+		public List<string> IdentificationId { get; set; }
+		public int Module { get; set; }
 		public bool SaveIt { get; set; }
 		public int Template { get; set; }
 		public string CallBackUri { get; set; }

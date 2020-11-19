@@ -370,7 +370,7 @@ namespace APIGateway.Handlers.Workflow.Approvals
                 ToAddresses = _mapper.Map<List<EmailAddress>>(sm.ToAddresses),
             };
             em.SendIt = true;
-          
+            em.Module = (int)Modules.CENTRAL;
             await _email.Send(em);
         }
 
@@ -396,6 +396,7 @@ namespace APIGateway.Handlers.Workflow.Approvals
                     FromAddresses = mailSent.FromAddresses,
                     ToAddresses = _mapper.Map<List<EmailAddress>>(sm.ToAddresses),
                 };
+                em.Module = (int)Modules.CENTRAL; 
                 await _email.Send(em);
             }
            

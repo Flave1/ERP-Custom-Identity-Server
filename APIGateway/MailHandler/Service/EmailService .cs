@@ -200,6 +200,7 @@ namespace APIGateway.MailHandler.Service
                 var item = await _dataContext.EmailMessage.FindAsync(model.EmailMessageId);
                 if (item != null)
                 {
+                    item.EmailStatus = (int)EmailStatus.Read;   
                     _dataContext.Entry(item).CurrentValues.SetValues(model);
                 }
             }
@@ -279,17 +280,24 @@ namespace APIGateway.MailHandler.Service
                 emailObject.FromAddresses.Add(new EmailAddress { Name = caption, Address = _emailConfiguration.SmtpUsername,});
             }
             emailObject.ToAddresses = _mapper.Map<List<EmailAddress>>(request.ToAddresses);
-          
+
+            if (!string.IsNullOrEmpty(request.UserIds))
+            {
+                request.IdentificationId = request.UserIds.Split(',').ToList();
+            }
             if(emailObject.ToAddresses.Count() > 0)
             {
+                var index = 0;
                 foreach (var receiverPerson in request.ToAddresses)
-                { 
+                {
+                    emailObject.Module = request.Module;
                     emailObject.EmailStatus = (int)EmailStatus.Received;
                     emailObject.DateSent = DateTime.Now;
                     emailObject.Content = request.Content;
                     emailObject.Subject = request.Subject;
-                    emailObject.ReceiverUserId = request.UserId;
+                    if(!string.IsNullOrEmpty(request.UserIds)) emailObject.ReceiverUserId = request.IdentificationId[index] ?? string.Empty;
                     emailObject.ReceivedBy = receiverPerson.Address;
+                    index = index + 1;
                     if (request.SaveIt) await SaveUpdateEmailAsync(emailObject);
                 }
             }

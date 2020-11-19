@@ -48,8 +48,7 @@ namespace Puchase_and_payables.Handlers.Supplier.Settup
                     else
                         await _data.SolutionModule.AddAsync(sol);
                     await _data.SaveChangesAsync();
-
-
+                     
                     var actionTaken = request.SolutionModuleId < 1 ? "created" : "updated";
                     response.SolutionModuleId = sol.SolutionModuleId;
                     response.Status.IsSuccessful = true;

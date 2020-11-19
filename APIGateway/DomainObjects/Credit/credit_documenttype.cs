@@ -1,5 +1,6 @@
 ﻿using GODPAPIs.Contracts.GeneralExtension; 
-using System.ComponentModel.DataAnnotations; 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APIGateway.DomainObjects.Credit
 {
@@ -7,6 +8,7 @@ namespace APIGateway.DomainObjects.Credit
     {
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int DocumentTypeId { get; set; }
 
         [Required]

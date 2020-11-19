@@ -34,14 +34,14 @@ namespace APIGateway.MailHandler.Send_Recieve_Handler
             }
             public async Task<EmailRespObj> Handle(GetSingleEmailDetailsComandQuery request, CancellationToken cancellationToken)
             { 
-                var response = new EmailRespObj { Status = new APIResponseStatus { IsSuccessful = false, Message = new APIResponseMessage() } };
+                var response = new EmailRespObj { Emails = new List<EmailMessageObj>(), Status = new APIResponseStatus { IsSuccessful = false, Message = new APIResponseMessage() } };
                 try
                 { 
                     var res = await _email.GetSingleEmailAsync(request.EmailId);
                     
                     if (res != null)
                     {
-                        if(res.EmailStatus == (int)EmailStatus.Sent)
+                        if(res.EmailStatus == (int)EmailStatus.Received)
                         {
                             res.EmailStatus = (int)EmailStatus.Read;
                             await _email.SaveUpdateEmailAsync(res);
@@ -57,8 +57,9 @@ namespace APIGateway.MailHandler.Send_Recieve_Handler
                             SentBy = res.SentBy,
                             ReceivedBy = res.ReceivedBy,
                             Subject = res.Subject, 
-                        }; 
+                        }??new EmailMessageObj(); 
                         response.Status.IsSuccessful = true;
+                        response.Emails.Add(email);
                         return response;
                     }
                     return response;

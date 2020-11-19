@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIGateway.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201003063805_FailedLoginModified")]
-    partial class FailedLoginModified
+    [Migration("20201030091530_Initial_migration")]
+    partial class Initial_migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,8 +29,11 @@ namespace APIGateway.Migrations
                     b.Property<int>("Counter")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("RetryTime")
-                        .HasColumnType("time");
+                    b.Property<int>("QuestionTimeCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RetryTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Userid");
 
@@ -150,9 +153,28 @@ namespace APIGateway.Migrations
                     b.Property<bool>("UseActiveDirectory")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("WhenNextToUpdatePassword")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("ScrewIdentifierGridId");
 
                     b.ToTable("ScrewIdentifierGrid");
+                });
+
+            modelBuilder.Entity("APIGateway.AuthGrid.SessionChecker", b =>
+                {
+                    b.Property<string>("Userid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("LastRefreshed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Module")
+                        .HasColumnType("int");
+
+                    b.HasKey("Userid");
+
+                    b.ToTable("SessionChecker");
                 });
 
             modelBuilder.Entity("APIGateway.AuthGrid.Tracker", b =>
@@ -313,9 +335,7 @@ namespace APIGateway.Migrations
             modelBuilder.Entity("APIGateway.DomainObjects.Credit.credit_documenttype", b =>
                 {
                     b.Property<int>("DocumentTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<bool?>("Active")
                         .HasColumnType("bit");
@@ -382,6 +402,21 @@ namespace APIGateway.Migrations
                     b.HasKey("SolutionModuleId");
 
                     b.ToTable("SolutionModule");
+                });
+
+            modelBuilder.Entity("APIGateway.DomainObjects.Questions.Questions", b =>
+                {
+                    b.Property<int>("QuestionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Question")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("QuestionId");
+
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("APIGateway.DomainObjects.UserAccount.cor_useremailconfirmation", b =>
@@ -590,6 +625,9 @@ namespace APIGateway.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("EmailStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Module")
                         .HasColumnType("int");
 
                     b.Property<string>("ReceivedBy")
@@ -1922,10 +1960,16 @@ namespace APIGateway.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("EnableAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsFirstLoginAttempt")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsQuestionTime")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastLoginDate")
@@ -1957,11 +2001,10 @@ namespace APIGateway.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SecurityAnswer")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("SecurityQuestion")
+                    b.Property<string>("SecurityAnswer")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 

@@ -1,5 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc; 
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace APIGateway.AuthGrid
@@ -31,7 +32,17 @@ namespace APIGateway.AuthGrid
         {
             return Ok(await _mediator.Send(que));
         }
-
+        
+        [HttpPost(ExposerInterface.GetTracked)]
+        public async Task<IActionResult> GetTracked([FromBody] ExposeTracker query)
+        {
+            var res = await _mediator.Send(query);
+            if (res == HttpStatusCode.OK)
+                return Ok();
+            if (res == HttpStatusCode.Unauthorized)
+                return Unauthorized();
+            return Ok();
+        }
         [HttpPost(ExposerInterface.FAILED_LOGIN)]
         public async Task<IActionResult> FAILED_LOGIN([FromBody] LoginFailed comm)
         {
@@ -49,13 +60,23 @@ namespace APIGateway.AuthGrid
             return BadRequest(response);
         }
 
+        [HttpGet(ExposerInterface.GetOtherServiceSetting)]
+        public async Task<IActionResult> GetOtherServiceSetting()
+        {
+            var que = new ExposeOtherServiceAuthGrid();
+            return Ok(await _mediator.Send(que));
+        }
+        
+
         public class ExposerInterface
         {
             public const string AuthAdd = "/api/v1/admin/auth/guard/add/update";
             public const string GetAll = "/api/v1/admin/auth/guard/get/all";
+            public const string GetOtherServiceSetting = "/api/v1/admin/otherservice/auth/guard/get/all";
             public const string GetSiingle = "/api/v1/admin/auth/guard/get/single";
             public const string FAILED_LOGIN = "/api/v1/identity/failed/login";
             public const string Session_LOGIN = "/api/v1/identity/session/login";
+            public const string GetTracked = "/api/v1/identity/get/trackedlogin";
         }
     }
 }
