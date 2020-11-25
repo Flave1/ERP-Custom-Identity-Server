@@ -729,14 +729,14 @@ namespace APIGateway.Handlers.Seeder
                 SeedMaritalStatus(context);
                 SeedTitles(context);
                 SeedEmploymentType(context);
-                SeedActivitParents(context);
-                SeedActivities(context);
-                SeedOperationType(context);
-                SeedOperation(context);
-                SeedAuthenticationSecuritySetting(context);
-                SeedDoctypes(context);
-            }
-            return host;
+                //    SeedActivitParents(context);
+                //    SeedActivities(context);
+                //    SeedOperationType(context);
+                //    SeedOperation(context);
+                //    SeedAuthenticationSecuritySetting(context);
+                //    SeedDoctypes(context);
+                }
+                return host;
         }
     }
 }
