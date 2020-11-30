@@ -169,8 +169,7 @@ namespace APIGateway.MailHandler.Service
                             {
                                 _logger.Information($"Could not Authenticate email '{mimeMsg.Subject}'");
                                 client.Authenticate(_emailConfiguration.SmtpUsername, _emailConfiguration.SmtpPassword);
-                            }
-
+                            } 
                         }
                         else
                         {

@@ -1,26 +1,27 @@
 ﻿using APIGateway.AuthGrid;
 using APIGateway.DomainObjects.Company;
 using APIGateway.DomainObjects.Credit;
+using APIGateway.DomainObjects.hrm;
 using APIGateway.DomainObjects.Modules;
 using APIGateway.DomainObjects.Questions;
 using APIGateway.DomainObjects.UserAccount;
 using APIGateway.DomainObjects.Workflow;
 using APIGateway.Handlers.Seeder;
 using APIGateway.MailHandler;
-using GODP.APIsContinuation.DomainObjects.Account; 
-using GODP.APIsContinuation.DomainObjects.Company; 
-using GODP.APIsContinuation.DomainObjects.Currency; 
-using GODP.APIsContinuation.DomainObjects.Ifrs; 
+using GODP.APIsContinuation.DomainObjects.Account;
+using GODP.APIsContinuation.DomainObjects.Company;
+using GODP.APIsContinuation.DomainObjects.Currency;
+using GODP.APIsContinuation.DomainObjects.Ifrs;
 using GODP.APIsContinuation.DomainObjects.Operation;
-using GODP.APIsContinuation.DomainObjects.Others; 
-using GODP.APIsContinuation.DomainObjects.Staff; 
+using GODP.APIsContinuation.DomainObjects.Others;
+using GODP.APIsContinuation.DomainObjects.Staff;
 using GODP.APIsContinuation.DomainObjects.UserAccount;
-using GODP.APIsContinuation.DomainObjects.Workflow; 
-using GODPAPIs.Contracts.GeneralExtension; 
-using Microsoft.AspNetCore.Http; 
+using GODP.APIsContinuation.DomainObjects.Workflow;
+using GODPAPIs.Contracts.GeneralExtension;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration; 
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +34,30 @@ namespace APIGateway.Data
         public readonly IHttpContextAccessor _accessor;
         public DataContext(DbContextOptions<DataContext> options, IHttpContextAccessor httpContextAccessor)
             : base(options) { _accessor = httpContextAccessor ; }
+
+
+       /// <summary>
+       /// hrm data objects starts
+       /// </summary>
+
+        public DbSet<hrm_setup_jobdetails> hrm_setup_jobdetails { get; set; }
+        public DbSet<hrm_setup_sub_skill> hrm_setup_sub_skill { get; set; }
+        public DbSet<hrm_setup_jobgrade> hrm_setup_jobgrade { get; set; }
+        public DbSet<hrm_setup_employmenttype> hrm_setup_employmenttype { get; set; }
+        public DbSet<hrm_setup_employmentlevel> hrm_setup_employmentlevel { get; set; }
+        public DbSet<hrm_setup_academic_qualification> hrm_setup_academic_qualification { get; set; }
+        public DbSet<hrm_setup_academic_discipline> hrm_setup_academic_discipline { get; set; }
+        public DbSet<hrm_setup_academic_grade> hrm_setup_academic_grade { get; set; }
+        public DbSet<hrm_setup_high_school_subjects> hrm_setup_high_school_subjects { get; set; }
+        public DbSet<hrm_setup_high_school_grade> hrm_setup_high_school_grades { get; set; }
+        public DbSet<hrm_setup_proffessional_certification> hrm_setup_proffessional_certification { get; set; }
+        public DbSet<hrm_setup_languages> hrm_setup_languages { get; set; }
+        public DbSet<hrm_setup_proffesional_membership> hrm_setup_proffesional_membership { get; set; }
+        public DbSet<hrm_setup_hmo> hrm_setup_hmo { get; set; }
+        public DbSet<hrm_setup_gym_workouts> hrm_setup_gym_workouts { get; set; }
+        /// <summary>
+        /// hrm data objects stops
+        /// </summary>
 
         public DbSet<Questions> Questions { get; set; } 
         public DbSet<SessionChecker> SessionChecker { get; set; }
@@ -91,6 +116,28 @@ namespace APIGateway.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); 
+        }
+
+        public override int SaveChanges()
+        {
+            var loggedInUserId = _accessor?.HttpContext?.User?.FindFirst(x => x?.Type == "userId")?.Value ?? "useradmin";
+            foreach (var entry in ChangeTracker.Entries<GeneralEntity>())
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.Active = true;
+                    entry.Entity.Deleted = false;
+                    entry.Entity.Active = true;
+                    entry.Entity.CreatedOn = DateTime.Now;
+                    entry.Entity.CreatedBy = loggedInUserId;
+                }
+                else
+                {
+                    entry.Entity.UpdatedOn = DateTime.Now;
+                    entry.Entity.UpdatedBy = loggedInUserId;
+                }
+            }
+            return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

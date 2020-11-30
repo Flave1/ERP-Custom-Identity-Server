@@ -80,6 +80,7 @@
     <Compile Remove="Handlers\Common\GetAllDirectorTypeQueryHandler.cs" />
     <Compile Remove="Handlers\Common\GetAllGLAccountQueryHandler.cs" />
     <Compile Remove="Handlers\Common\GetAllProductTypeQueryHandler.cs" />
+    <Compile Remove="Handlers\Hrm\setup\jobdetail\Uploadjobdetails.cs" />
     <Compile Remove="Handlers\Workflow\GetCreditBureauQueryHandler.cs" />
     <Compile Remove="Handlers\Workflow\GetDocumenttypeQueryHandler.cs" />
     <Compile Remove="Migrations\20200920071737_INITIAL_MIGRATION.cs" />

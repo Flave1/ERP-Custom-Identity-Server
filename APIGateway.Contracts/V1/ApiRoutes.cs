@@ -11,6 +11,92 @@ namespace GODPAPIs.Contracts.V1
 
         public const string Base = Root + "/" + Version;
 
+        public static class Hrm_setup_endpoints
+        {
+            //academic discipline
+            public const string ADD_UPDATE_ACADEMIC_DISCPLINE = Base + "/hrmsetup/add/update/academic/discipline";
+            public const string DELETE_ACADEMIC_DISCPLINE = Base + "/hrmsetup/delete/academic/discipline";
+            public const string GET_ALL_ACADEMIC_DISCPLINE = Base + "/hrmsetup/get/all/academic/disciplines";
+            public const string GET_SINGLE_ACADEMIC_DISCPLINE = Base + "/hrmsetup/get/single/academic/discipline";
+
+            //academic grades
+            public const string ADD_UPDATE_ACADEMIC_GRADES = Base + "/hrmsetup/add/update/academic/grade";
+            public const string DELETE_ACADEMIC_GRADES = Base + "/hrmsetup/delete/academic/grade";
+            public const string GET_ALL_ACADEMIC_GRADES = Base + "/hrmsetup/get/all/academic/grades";
+            public const string GET_SINGLE_ACADEMIC_GRADES = Base + "/hrmsetup/get/single/academic/grade";
+
+            //academic qualification
+            public const string ADD_UPDATE_ACADEMIC_QUALIFICATION = Base + "/hrmsetup/add/update/academic/qualification";
+            public const string DELETE_ACADEMIC_QUALIFICATION = Base + "/hrmsetup/delete/academic/qualification";
+            public const string GET_ALL_ACADEMIC_QUALIFICATION = Base + "/hrmsetup/get/all/academic/qualifications";
+            public const string GET_SINGLE_ACADEMIC_QUALIFICATION = Base + "/hrmsetup/get/single/academic/qualification";
+
+            //employment type
+            public const string ADD_UPDATE_EMPLYMENT_TYPE = Base + "/hrmsetup/add/update/employmenttype";
+            public const string DELETE_EMPLYMENT_TYPE = Base + "/hrmsetup/delete/employmenttype";
+            public const string GET_ALL_EMPLYMENT_TYPE = Base + "/hrmsetup/get/all/employmenttypes";
+            public const string GET_SINGLE_EMPLYMENT_TYPE = Base + "/hrmsetup/get/single/employmenttype";
+
+            //employment level
+            public const string ADD_UPDATE_EMPLYMENT_LEVEL = Base + "/hrmsetup/add/update/employmentlevel";
+            public const string DELETE_EMPLYMENT_LEVEL = Base + "/hrmsetup/delete/employmentlevel";
+            public const string GET_ALL_EMPLYMENT_LEVEL = Base + "/hrmsetup/get/all/emplpymentlevels";
+            public const string GET_SINGLE_EMPLYMENT_LEVEL = Base + "/hrmsetup/get/single/employmentlevel";
+
+            //gym workout
+            public const string ADD_UPDATE_GYM_WORKOUT = Base + "/hrmsetup/add/update/gymworkout";
+            public const string DELETE_GYM_WORKOUT = Base + "/hrmsetup/delete/gymworkout";
+            public const string GET_ALL_GYM_WORKOUT = Base + "/hrmsetup/get/all/gymworkouts";
+            public const string GET_SINGLE_GYM_WORKOUT = Base + "/hrmsetup/get/single/gymworkout";
+
+            //high_school_grade
+            public const string ADD_UPDATE_HIGH_SCHOOL_GRADE = Base + "/hrmsetup/add/update/highschoolgrade";
+            public const string DELETE_HIGH_SCHOOL_GRADE = Base + "/hrmsetup/delete/highschoolgrade";
+            public const string GET_ALL_HIGH_SCHOOL_GRADE = Base + "/hrmsetup/get/all/highschoolgrades";
+            public const string GET_SINGLE_HIGH_SCHOOL_GRADE = Base + "/hrmsetup/get/single/highschoolgrade";
+
+            //high_school_subjects
+            public const string ADD_UPDATE_HIGH_SCHOOL_SUBJECT = Base + "/hrmsetup/add/update/highschoolsubject";
+            public const string DELETE_HIGH_SCHOOL_SUBJECT = Base + "/hrmsetup/delete/highschoolsubject";
+            public const string GET_ALL_HIGH_SCHOOL_SUBJECT = Base + "/hrmsetup/get/all/highschoolsubjects";
+            public const string GET_SINGLE_HIGH_SCHOOL_SUBJECT = Base + "/hrmsetup/get/single/highschoolsubject";
+
+            //hmo
+            public const string ADD_UPDATE_HMO= Base + "/hrmsetup/add/update/hmo";
+            public const string DELETE_HMO = Base + "/hrmsetup/delete/hmo";
+            public const string GET_ALL_HMO = Base + "/hrmsetup/get/all/hmos";
+            public const string GET_SINGLE_HMO = Base + "/hrmsetup/get/single/hmo";
+
+            //job details
+            public const string ADD_UPDATE_JOB_DETAILS = Base + "/hrmsetup/add/update/jobdetail";
+            public const string DELETE_JOB_DETAILS = Base + "/hrmsetup/delete/jobdetail";
+            public const string GET_ALL_JOB_DETAILS = Base + "/hrmsetup/get/all/jobdetails";
+            public const string GET_SINGLE_JOB_DETAILS = Base + "/hrmsetup/get/single/jobdetail";
+
+            //job grade
+            public const string ADD_UPDATE_JOB_GRADE = Base + "/hrmsetup/add/update/jobgrade";
+            public const string DELETE_JOB_GRADE = Base + "/hrmsetup/delete/jobgrade";
+            public const string GET_ALL_JOB_GRADE = Base + "/hrmsetup/get/all/jobgrades";
+            public const string GET_SINGLE_JOB_GRADE = Base + "/hrmsetup/get/single/jobgrade";
+
+            //language
+            public const string ADD_UPDATE_LANGUAGE = Base + "/hrmsetup/add/update/language";
+            public const string DELETE_LANGUAGE = Base + "/hrmsetup/delete/language";
+            public const string GET_ALL_LANGUAGE = Base + "/hrmsetup/get/all/languages";
+            public const string GET_SINGLE_LANGUAGE = Base + "/hrmsetup/get/single/language";
+
+            //prf membership
+            public const string ADD_UPDATE_PROF_MEMBERSHIP = Base + "/hrmsetup/add/update/prof_membership";
+            public const string DELETE_PROF_MEMBERSHIP = Base + "/hrmsetup/delete/prof_membership";
+            public const string GET_ALL_PROF_MEMBERSHIP = Base + "/hrmsetup/get/all/prof_membership";
+            public const string GET_SINGLE_PROF_MEMBERSHIP = Base + "/hrmsetup/get/single/prof_membership";
+
+            //prf certification
+            public const string ADD_UPDATE_PROF_CERTIFICATION = Base + "/hrmsetup/add/update/prof_certification";
+            public const string DELETE_PROF_CERTIFICATION = Base + "/hrmsetup/delete/prof_certification";
+            public const string GET_ALL_PROF_CERTIFICATION = Base + "/hrmsetup/get/all/prof_certification";
+            public const string GET_SINGLE_PROF_CERTIFICATION = Base + "/hrmsetup/get/single/prof_certification";
+        }
         public static class EmailEndpoint
         {
             public const string SEND_EMAIL = Base + "/email/send/emails";

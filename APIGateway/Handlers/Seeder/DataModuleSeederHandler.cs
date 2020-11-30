@@ -725,10 +725,10 @@ namespace APIGateway.Handlers.Seeder
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<DataContext>();
 
-                SeedGender(context);
-                SeedMaritalStatus(context);
-                SeedTitles(context);
-                SeedEmploymentType(context);
+                //SeedGender(context);
+                //SeedMaritalStatus(context);
+                //SeedTitles(context);
+                //SeedEmploymentType(context);
                 //    SeedActivitParents(context);
                 //    SeedActivities(context);
                 //    SeedOperationType(context);
