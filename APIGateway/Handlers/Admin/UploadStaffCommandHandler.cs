@@ -109,7 +109,7 @@ namespace APIGateway.Handlers.Admin
                               
                                 if(totalColumns != 18)
                                 {
-                                    response.Status.Message.FriendlyMessage = "18 Columns Expected";
+                                    response.Status.Message.FriendlyMessage = "27 Columns Expected";
                                     return response;
                                 }
 
@@ -135,6 +135,15 @@ namespace APIGateway.Handlers.Admin
                                     item.UserAccessLevelsNames = workSheet.Cells[i, 16]?.Value != null ? workSheet.Cells[i, 16]?.Value.ToString() : string.Empty;
                                     item.ExcelUserRoleNames = workSheet.Cells[i, 17]?.Value != null ? workSheet.Cells[i, 17]?.Value.ToString() : string.Empty;
                                     item.UserName = workSheet.Cells[i, 18]?.Value != null ? workSheet.Cells[i, 18]?.Value.ToString() : string.Empty;
+                                    item.IsHRAdmin = workSheet.Cells[i, 19]?.Value != null ? bool.Parse(workSheet.Cells[i, 19]?.Value.ToString()) : false;
+                                    item.PPEAdmin = workSheet.Cells[i, 20]?.Value != null ? bool.Parse(workSheet.Cells[i, 20]?.Value.ToString()) : false;
+                                    item.IsPandPAdmin = workSheet.Cells[i, 21]?.Value != null ? bool.Parse(workSheet.Cells[i, 21]?.Value.ToString()) : false;
+                                    item.IsCreditAdmin = workSheet.Cells[i, 22]?.Value != null ? bool.Parse(workSheet.Cells[i, 22]?.Value.ToString()) : false;
+                                    item.IsInvestorFundAdmin = workSheet.Cells[i, 23]?.Value != null ? bool.Parse(workSheet.Cells[i, 23]?.Value.ToString()) : false;
+                                    item.IsDepositAdmin = workSheet.Cells[i, 24]?.Value != null ? bool.Parse(workSheet.Cells[i, 24]?.Value.ToString()) : false;
+                                    item.IsTreasuryAdmin = workSheet.Cells[i, 25]?.Value != null ? bool.Parse(workSheet.Cells[i, 25]?.Value.ToString()) : false;
+                                    item.IsExpenseManagementAdmin = workSheet.Cells[i, 26]?.Value != null ? bool.Parse(workSheet.Cells[i, 26]?.Value.ToString()) : false;
+                                    item.IsFinanceAdmin = workSheet.Cells[i, 27]?.Value != null ? bool.Parse(workSheet.Cells[i, 27]?.Value.ToString()) : false; 
                                     StaffRecord.Add(item);
                                 }
 
@@ -388,6 +397,15 @@ namespace APIGateway.Handlers.Admin
                             existingStaffDetail.StaffOfficeId = staffOfficeId;
                             existingStaffDetail.AccessLevel = item.AccessLevelId;
                             existingStaffDetail.StaffLimit = item.StaffLimit; 
+                            existingStaffDetail.IsHRAdmin = item.IsHRAdmin;
+                            existingStaffDetail.PPEAdmin = item.PPEAdmin;
+                            existingStaffDetail.IsPandPAdmin = item.IsPandPAdmin;
+                            existingStaffDetail.IsCreditAdmin = item.IsCreditAdmin;
+                            existingStaffDetail.IsInvestorFundAdmin = item.IsInvestorFundAdmin;
+                            existingStaffDetail.IsDepositAdmin = item.IsDepositAdmin;
+                            existingStaffDetail.IsTreasuryAdmin = item.IsTreasuryAdmin;
+                            existingStaffDetail.IsExpenseManagementAdmin = item.IsExpenseManagementAdmin;
+                            existingStaffDetail.IsFinanceAdmin = item.IsFinanceAdmin; 
 
                             await _repo.AddUpdateStaffAsync(existingStaffDetail);
                             var user =  _userManager.Users.FirstOrDefault(s => s.StaffId == existingStaffDetail.StaffId);
@@ -423,7 +441,17 @@ namespace APIGateway.Handlers.Admin
                             newStaffDetail.CountryId = countryId;
                             newStaffDetail.StaffOfficeId = staffOfficeId;
                             newStaffDetail.AccessLevel = item.AccessLevelId; 
-                            newStaffDetail.StaffLimit = item.StaffLimit;  
+                            newStaffDetail.StaffLimit = item.StaffLimit;
+
+                            newStaffDetail.IsHRAdmin = item.IsHRAdmin;
+                            newStaffDetail.PPEAdmin = item.PPEAdmin;
+                            newStaffDetail.IsPandPAdmin = item.IsPandPAdmin;
+                            newStaffDetail.IsCreditAdmin = item.IsCreditAdmin;
+                            newStaffDetail.IsInvestorFundAdmin = item.IsInvestorFundAdmin;
+                            newStaffDetail.IsDepositAdmin = item.IsDepositAdmin;
+                            newStaffDetail.IsTreasuryAdmin = item.IsTreasuryAdmin;
+                            newStaffDetail.IsExpenseManagementAdmin = item.IsExpenseManagementAdmin;
+                            newStaffDetail.IsFinanceAdmin = item.IsFinanceAdmin;
 
                             using (var _trans = await _dataContext.Database.BeginTransactionAsync())
                             {

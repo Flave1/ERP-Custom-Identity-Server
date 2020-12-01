@@ -25,7 +25,7 @@ using GOSLibraries.Enums;
 
 namespace GODP.APIsContinuation.Handlers.Admin
 {
-    public class UpdateStaffCommandHandler : IRequestHandler<UpdateStaffCommand, StaffRegRespObj>
+    public class AddUpdateEmployeeCommandHandler : IRequestHandler<UpdateStaffCommand, StaffRegRespObj>
     {
         private readonly IAdminRepository _adminRepo;
         private readonly ILoggerService _logger;
@@ -34,7 +34,7 @@ namespace GODP.APIsContinuation.Handlers.Admin
         private readonly UserManager<cor_useraccount> _userManager; 
         private readonly IEmailService _email;
         private readonly IEmailConfiguration _emailConfig;
-        public UpdateStaffCommandHandler(
+        public AddUpdateEmployeeCommandHandler(
             IAdminRepository repository, 
             ILoggerService loggerService, 
             IMapper mapper,
@@ -101,15 +101,9 @@ namespace GODP.APIsContinuation.Handlers.Admin
                         stf.StaffLimit = request.StaffLimit;
                         stf.StaffOfficeId = request.StaffOfficeId; 
                         stf.StaffId = request.StaffId;
-                        stf.IsHRAdmin = request.IsHRAdmin;
-                        stf.PPEAdmin = request.PPEAdmin;
-                        stf.IsPandPAdmin = request.IsPandPAdmin;
-                        stf.IsCreditAdmin = request.IsCreditAdmin;
-                        stf.IsInvestorFundAdmin = request.IsInvestorFundAdmin; 
-                        stf.IsDepositAdmin = request.IsDepositAdmin; 
-                        stf.IsTreasuryAdmin = request.IsTreasuryAdmin;
-                        stf.IsExpenseManagementAdmin = request.IsExpenseManagementAdmin;
-                        stf.IsFinanceAdmin = request.IsFinanceAdmin;
+                        stf.Active = true;
+                        stf.Deleted = false;
+                        stf.Active = true;
                         var staffIsCreated = await _adminRepo.AddUpdateStaffAsync(stf);
                        
                         if (staffIsCreated)

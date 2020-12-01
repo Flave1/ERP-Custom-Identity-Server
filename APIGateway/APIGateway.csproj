@@ -146,6 +146,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Handlers\Hrm\setup\NewFolder\" />
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 

@@ -49,6 +49,16 @@ namespace GODPAPIs.Contracts.Response.Admin
         public string UserAccessLevelsNames { get; set; }
         public string AccessNames { get; set; }
         public int ExcelLineNumber { get; set; }
+        //...............................
+        public bool IsHRAdmin { get; set; }
+        public bool PPEAdmin { get; set; }
+        public bool IsPandPAdmin { get; set; }
+        public bool IsCreditAdmin { get; set; }
+        public bool IsInvestorFundAdmin { get; set; }
+        public bool IsDepositAdmin { get; set; }
+        public bool IsTreasuryAdmin { get; set; }
+        public bool IsExpenseManagementAdmin { get; set; }
+        public bool IsFinanceAdmin { get; set; }
     }
 
     public class StaffRegRespObj

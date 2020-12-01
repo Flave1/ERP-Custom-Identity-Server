@@ -19,7 +19,6 @@ namespace GODP.APIsContinuation.Validations
             RuleFor(x => x.JobTitle).NotEmpty();
             RuleFor(x => x.MiddleName).NotEmpty().MinimumLength(2);
             RuleFor(x => x.PhoneNumber).MinimumLength(11).NotEmpty();
-            RuleFor(x => x.StaffLimit).NotEmpty();
             RuleFor(x => x.StateId).NotEmpty();
             RuleFor(x => x.UserRoleNames).NotEmpty();
             RuleFor(x => x.UserName).NotEmpty().MinimumLength(2);

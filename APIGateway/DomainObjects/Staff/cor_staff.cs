@@ -57,11 +57,20 @@ namespace GODP.APIsContinuation.DomainObjects.Staff
         public int? AccessLevel { get; set; }
 
         public int? StaffOfficeId { get; set; }
-
-        //public virtual ICollection<cor_passwordhistory> cor_passwordhistory { get; set; }
+         
         public virtual ICollection<cor_workflowlevelstaff> cor_workflowlevelstaff { get; set; } 
         public virtual cor_state cor_state { get; set; }
-        public virtual cor_country cor_country { get; set; } 
-         
+        public virtual cor_country cor_country { get; set; }
+
+        public bool IsHRAdmin { get; set; }
+        public bool PPEAdmin { get; set; }
+        public bool IsPandPAdmin { get; set; }
+        public bool IsCreditAdmin { get; set; }
+        public bool IsInvestorFundAdmin { get; set; }
+        public bool IsDepositAdmin { get; set; }
+        public bool IsTreasuryAdmin { get; set; }
+        public bool IsExpenseManagementAdmin { get; set; }
+        public bool IsFinanceAdmin { get; set; }
+
     }
 }

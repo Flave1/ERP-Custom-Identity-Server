@@ -1,11 +1,10 @@
-﻿using GODPAPIs.Contracts.RequestResponse;
-using GODPAPIs.Contracts.Response.Admin;
+﻿using GODPAPIs.Contracts.Response.Admin;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GODPAPIs.Contracts.Commands.Admin
+namespace APIGateway.Contracts.Commands.hrm.employee
 {
     public class UpdateStaffCommand : IRequest<StaffRegRespObj>
     {
@@ -22,8 +21,7 @@ namespace GODPAPIs.Contracts.Commands.Admin
         public string Gender { get; set; }
         public int? StateId { get; set; }
         public int? CountryId { get; set; }
-        public byte[] Photo { get; set; }
-        public decimal? StaffLimit { get; set; }
+        public byte[] Photo { get; set; } 
         public int? AccessLevel { get; set; }
         public int? StaffOfficeId { get; set; }
 
@@ -31,21 +29,9 @@ namespace GODPAPIs.Contracts.Commands.Admin
         public string UserStatus { get; set; }
         public string UserId { get; set; }
         public int AccessLevelId { get; set; }
-        public int[] UserAccessLevels { get; set; }
-
-        public string[] UserRoleNames { get; set; }
-        public bool IsHRAdmin { get; set; }
-        public bool PPEAdmin { get; set; }
-        public bool IsPandPAdmin { get; set; }
-        public bool IsCreditAdmin { get; set; }
-        public bool IsInvestorFundAdmin { get; set; }
-        public bool IsDepositAdmin { get; set; }
-        public bool IsTreasuryAdmin { get; set; }
-        public bool IsExpenseManagementAdmin { get; set; }
-        public bool IsFinanceAdmin { get; set; }
+        public int[] UserAccessLevels { get; set; } 
+        public string[] UserRoleNames { get; set; } 
+        
     }
-    public class DeleteStaffCommand : IRequest<DeleteRespObj>
-    {
-        public List<DeleteItemReqObj> req { get; set; }
-    }
+     
 }
